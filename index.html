@@ -119,7 +119,34 @@
     les règles de sécurité.
   </div>
 </section>
+<section id="rapport" class="section">
+  <p class="sourcil">RAPPORT</p>
+  <h2>Signaler un problème</h2>
 
+  <p>
+    Votre sécurité et votre tranquillité sont importantes.
+    Utilisez ce formulaire pour signaler un comportement,
+    une expérience ou un contenu qui ne respecte pas les règles.
+  </p>
+
+  <form>
+    <label for="motif">Motif du rapport</label>
+    <select id="motif" name="motif">
+      <option value="">Choisir un motif</option>
+      <option>Comportement inapproprié</option>
+      <option>Non-respect des règles</option>
+      <option>Problème de sécurité</option>
+      <option>Contenu à signaler</option>
+      <option>Autre</option>
+    </select>
+
+    <label for="message">Décrivez le problème</label>
+    <textarea id="message" name="message" rows="5"
+      placeholder="Expliquez ce qui s'est passé..."></textarea>
+
+    <button type="submit" class="primaire">Envoyer le rapport</button>
+  </form>
+</section>
 </main>
 
 <footer>
