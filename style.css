@@ -166,5 +166,39 @@ footer {
 
   section {
     padding: 60px 5%;
+  }button {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 79, 216, 0.35);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+.primaire {
+  box-shadow: 0 5px 20px rgba(255, 60, 172, 0.25);
+}
+
+.contour:hover {
+  background: rgba(255, 79, 216, 0.12);
+}
+
+.hero-buttons button {
+  min-width: 190px;
+}
+
+@media (max-width: 700px) {
+  .hero-buttons {
+    gap: 12px;
   }
+
+  .hero-buttons button {
+    width: 100%;
+    min-width: 0;
+  }
+}
 }
