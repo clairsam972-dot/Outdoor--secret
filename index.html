@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outdoor Secrets — MVP</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="nav">
+    <div class="brand"><span>OUTDOOR</span> <em>Secrets</em></div>
+    <nav>
+      <a href="#experiences">Rendez-vous</a>
+      <a href="#hunt">La Chasse</a>
+      <a href="#create">Créer</a>
+      <a href="#security">Sécurité</a>
+    </nav>
+    <button class="outline">Connexion</button>
+    <button class="primary">Inscription +18</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">RENCONTRES ADULTES • DISCRÉTION • CONSENTEMENT</p>
+        <h1>Vos envies d’extérieur.<br><strong>Des rencontres uniques.</strong></h1>
+        <p class="lead">Découvrez des expériences proposées par des membres adultes, avec un nombre de places limité et un accès contrôlé.</p>
+        <div class="actions">
+          <button class="primary" onclick="document.querySelector('#experiences').scrollIntoView({behavior:'smooth'})">Découvrir les expériences</button>
+          <button class="outline" onclick="document.querySelector('#create').scrollIntoView({behavior:'smooth'})">Créer une expérience</button>
+        </div>
+        <div class="stats">
+          <div><b>+18</b><span>réservé aux adultes</span></div>
+          <div><b>Places limitées</b><span>validation par l'organisateur</span></div>
+          <div><b>Localisation discrète</b><span>zone publique approximative</span></div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="badge">PROCHAIN RENDEZ-VOUS</div>
+        <h3>Nuit Mystère</h3>
+        <p>🌙 Samedi • 22h30</p>
+        <p>👥 4 / 6 participants</p>
+        <p>📍 Secteur : Val-de-Marne</p>
+        <button class="primary full">Voir l'expérience</button>
+      </div>
+    </section>
+
+    <section id="experiences" class="section">
+      <div class="section-title">
+        <div><p class="eyebrow">EXPLORER</p><h2>Expériences à venir</h2></div>
+        <button class="outline">Voir tout</button>
+      </div>
+      <div class="grid">
+        <article class="experience">
+          <div class="photo p1"></div><div class="content">
+            <span class="tag">Exhibition consentie</span><h3>Nuit Mystère</h3>
+            <p>Samedi 22h30 • 4/6 places</p><p class="muted">Secteur Val-de-Marne</p>
+            <button class="primary full">Demander une place</button>
+          </div>
+        </article>
+        <article class="experience">
+          <div class="photo p2"></div><div class="content">
+            <span class="tag">Voyeurisme consenti</span><h3>Balade Nocturne</h3>
+            <p>Dimanche 21h00 • 3/4 places</p><p class="muted">Lieu privé communiqué aux participants</p>
+            <button class="primary full">Demander une place</button>
+          </div>
+        </article>
+        <article class="experience">
+          <div class="photo p3"></div><div class="content">
+            <span class="tag">La Chasse</span><h3>Le Couple Mystère</h3>
+            <p>5 indices • 60 min • 6 participants</p><p class="muted">Départ dans une zone définie</p>
+            <button class="primary full" onclick="document.querySelector('#hunt').scrollIntoView({behavior:'smooth'})">Voir la chasse</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="hunt" class="section hunt">
+      <div>
+        <p class="eyebrow">EXPÉRIENCE ORIGINALE</p>
+        <h2>🧩 La Chasse — Le Couple Mystère</h2>
+        <p class="lead">Une expérience scénarisée : les participants résolvent des énigmes et indices successifs pour atteindre un point final défini par l'organisateur.</p>
+        <ul>
+          <li>5 indices progressifs</li>
+          <li>6 participants maximum</li>
+          <li>Classement et points</li>
+          <li>Localisation finale révélée uniquement aux participants autorisés</li>
+        </ul>
+        <button class="primary">Commencer la chasse</button>
+      </div>
+      <div class="hunt-card">
+        <div class="timer">01:24:17</div>
+        <span class="tag">INDICE 1</span>
+        <h3>Où suis-je ?</h3>
+        <p>« Mon premier est un endroit pour se promener, mon second est souvent plein de verdure… »</p>
+        <input placeholder="Votre réponse">
+        <button class="primary full">Valider la réponse</button>
+      </div>
+    </section>
+
+    <section id="create" class="section create">
+      <div class="section-title"><div><p class="eyebrow">ORGANISATEUR</p><h2>Créer une expérience</h2></div></div>
+      <form onsubmit="event.preventDefault(); alert('Prototype : l’expérience serait soumise à validation.');">
+        <label>Type d'expérience
+          <select><option>Exhibition consentie</option><option>Voyeurisme consenti</option><option>Rencontre entre couples</option><option>La Chasse</option></select>
+        </label>
+        <label>Titre<input required placeholder="Ex. Nuit Mystère"></label>
+        <label>Date et heure<input required type="datetime-local"></label>
+        <label>Nombre maximum de participants<input required type="number" min="2" max="20" value="6"></label>
+        <label>Zone approximative<input required placeholder="Ex. Val-de-Marne"></label>
+        <label>Description<textarea rows="4" placeholder="Décrivez l'expérience, les règles et les conditions d'accès."></textarea></label>
+        <div class="notice">Les expériences doivent respecter le consentement de tous, les règles de la plateforme et la législation applicable. Aucun lieu public ne doit exposer des tiers non consentants.</div>
+        <button class="primary">Publier pour validation</button>
+      </form>
+    </section>
+
+    <section id="security" class="section security">
+      <p class="eyebrow">CONFIANCE</p><h2>Discrétion et sécurité dès le départ</h2>
+      <div class="security-grid">
+        <div>🔒 <b>Profil privé</b><span>Contrôle de la visibilité et blocage.</span></div>
+        <div>📍 <b>Position protégée</b><span>Pas de GPS précis affiché publiquement.</span></div>
+        <div>🚩 <b>Signalement</b><span>Un clic pour signaler une expérience ou un membre.</span></div>
+        <div>🛡️ <b>Modération</b><span>Les expériences peuvent être soumises à validation.</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>Outdoor Secrets — Prototype MVP • 18+ • Rencontres entre adultes consentants</footer>
+</body>
+</html>
