@@ -211,3 +211,6 @@ button:active {
     padding-top: 85px;
   }
 }
+section[id] {
+  scroll-margin-top: 180px;
+}
