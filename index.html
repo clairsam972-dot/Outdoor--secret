@@ -230,32 +230,63 @@
       <div class="icone">👫</div>
       <h3>Couple</h3>
       <p>Inscrivez-vous ensemble et rejoignez la communauté à deux.</p>
-      <button class="primaire">Choisir Couple</button>
+      <a class="primaire" href="#formulaire-couple">Choisir Couple</a>
     </article>
 
     <article class="carte-inscription">
       <div class="icone">👨</div>
       <h3>Homme</h3>
       <p>Rejoignez gratuitement Outdoor Secret.</p>
-      <button class="primaire">Choisir Homme</button>
+      <a class="primaire" href="#formulaire-homme">Choisir Homme</a>
     </article>
 
     <article class="carte-inscription">
       <div class="icone">👩</div>
       <h3>Femme</h3>
       <p>Rejoignez gratuitement Outdoor Secret.</p>
-      <button class="primaire">Choisir Femme</button>
+      <a class="primaire" href="#formulaire-femme">Choisir Femme</a>
     </article>
 
     <article class="carte-inscription">
       <div class="icone">🏳️‍⚧️</div>
       <h3>Trans</h3>
       <p>Rejoignez gratuitement Outdoor Secret.</p>
-      <button class="primaire">Choisir Trans</button>
+      <a class="primaire" href="#formulaire-trans">Choisir Trans</a>
     </article>
 
   </div>
-</section>
+<div id="formulaire-couple" class="formulaire-inscription">
+  <h2>Inscription — Couple</h2>
+
+  <p>
+    L'inscription est gratuite. Présentez votre couple et rejoignez
+    les rencontres de De Plein Air.
+  </p>
+
+  <form>
+    <label for="pseudo-couple">Pseudonyme du couple</label>
+    <input type="text" id="pseudo-couple" name="pseudo-couple" required>
+
+    <label for="email-couple">Adresse e-mail</label>
+    <input type="email" id="email-couple" name="email-couple" required>
+
+    <label for="ville-couple">Ville ou département</label>
+    <input type="text" id="ville-couple" name="ville-couple" required>
+
+    <label for="presentation-couple">Présentation</label>
+    <textarea id="presentation-couple" name="presentation-couple"
+      placeholder="Présentez votre couple en quelques mots..."></textarea>
+
+    <label>
+      <input type="checkbox" required>
+      Nous confirmons être majeurs.
+    </label>
+
+    <button type="submit" class="primaire">
+      Créer notre inscription gratuite
+    </button>
+  </form>
+</div></section>
 <footer>
   <p>© 2026 Secrets du plein air</p>
   <p>Adultes uniquement • Respect • Sécurité</p>
