@@ -337,6 +337,53 @@ document.getElementById("formulaire-inscription").addEventListener("submit", asy
     }
     }
 });
+<script>
+const SUPABASE_URL = "https://slvpdoovurqfykplefxe.supabase.co";
+const SUPABASE_KEY = "sb_publishable_LahEM8Av6dykKdttDABUCg_T-TUMMvt";
+
+const formulaire = document.getElementById("formulaire-inscription");
+
+formulaire.addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const pseudo = document.getElementById("pseudo-couple").value.trim();
+    const email = document.getElementById("email-couple").value.trim();
+    const ville = document.getElementById("ville-couple").value.trim();
+    const presentation = document.getElementById("presentation-couple").value.trim();
+
+    try {
+        const response = await fetch(
+            SUPABASE_URL + "/rest/v1/Inscription",
+            {
+                method: "POST",
+                headers: {
+                    "apikey": SUPABASE_KEY,
+                    "Authorization": "Bearer " + SUPABASE_KEY,
+                    "Content-Type": "application/json",
+                    "Prefer": "return=minimal"
+                },
+                body: JSON.stringify({
+                    "Pseudonyme": pseudo,
+                    "Email": email,
+                    "Ville-département": ville,
+                    "Présentation": presentation
+                })
+            }
+        );
+
+        if (!response.ok) {
+            const erreur = await response.text();
+            throw new Error(erreur);
+        }
+
+        alert("Inscription enregistrée avec succès !");
+        formulaire.reset();
+
+    } catch (error) {
+        console.error(error);
+        alert("Erreur Supabase : " + error.message);
+    }
+});
 </script>
 </body>
 </html>
