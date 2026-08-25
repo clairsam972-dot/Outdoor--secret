@@ -214,3 +214,33 @@ button:active {
 section[id] {
   scroll-margin-top: 180px;
 }
+/* Formulaire mobile */
+@media (max-width: 700px) {
+  #inscription form {
+    width: 100%;
+  }
+
+  #inscription form label {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  #inscription form input,
+  #inscription form textarea {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-top: 6px;
+  }
+
+  #inscription form textarea {
+    min-height: 120px;
+  }
+
+  #inscription form button {
+    width: 100%;
+    margin-top: 20px;
+  }
+}
