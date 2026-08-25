@@ -331,10 +331,10 @@ document.getElementById("formulaire-inscription").addEventListener("submit", asy
 
         alert("Inscription enregistrée avec succès !");
         this.reset();
-
-    } catch (error) {
-        console.error(error);
-        alert("Erreur lors de l'inscription. Vérifie les informations.");
+} catch (error) {
+    console.error(error);
+    alert("Erreur Supabase : " + error.message);
+    }
     }
 });
 </script>
