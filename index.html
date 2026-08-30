@@ -598,6 +598,51 @@ if (!response.ok) {
   });
 
 });
+  // CONNEXION DES MEMBRES
+
+const formulaireConnexion = document.getElementById("formulaire-connexion");
+
+formulaireConnexion.addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const email = document.getElementById("email-connexion").value;
+  const motdepasse = document.getElementById("motdepasse-connexion").value;
+
+  try {
+
+    const response = await fetch(
+      SUPABASE_URL + "/auth/v1/token?grant_type=password",
+      {
+        method: "POST",
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: email,
+          password: motdepasse
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error_description || "Email ou mot de passe incorrect");
+    }
+
+    alert("Connexion réussie ! Bienvenue sur Outdoor Secret.");
+
+    formulaireConnexion.reset();
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Erreur de connexion : " + error.message);
+  }
+
+});
 </script>
 </body>
 </html>
