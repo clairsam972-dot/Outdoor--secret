@@ -560,7 +560,7 @@ if (!response.ok) {
   const erreur = await response.text();
   throw new Error(erreur);
 }
-      }
+  
 
       alert("Inscription enregistrée avec succès !");
       formulaire.reset();
@@ -571,7 +571,7 @@ if (!response.ok) {
       alert("Erreur lors de l'inscription : " + error.message);
 
     }
-
+  });
 });
   // CONNEXION DES MEMBRES
 
