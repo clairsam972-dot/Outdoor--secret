@@ -560,29 +560,6 @@ if (!response.ok) {
   const erreur = await response.text();
   throw new Error(erreur);
 }
-        {
-          method: "POST",
-
-          headers: {
-            "apikey": SUPABASE_KEY,
-            "Authorization": "Bearer " + SUPABASE_KEY,
-            "Content-Type": "application/json",
-            "Prefer": "return=minimal"
-          },
-
-          body: JSON.stringify({
-            "Pseudonyme": pseudo,
-            "Email": email,
-            "ville_departement": ville,
-            "Présentation": presentation,
-            "Profil": config.profil
-          })
-        }
-      );
-
-      if (!response.ok) {
-        const erreur = await response.text();
-        throw new Error(erreur);
       }
 
       alert("Inscription enregistrée avec succès !");
