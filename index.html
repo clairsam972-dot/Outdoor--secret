@@ -512,28 +512,6 @@ formulaires.forEach(function(config) {
 
     try {
 
-     // 1️⃣ Création du compte avec email et mot de passe
-const authResponse = await fetch(
-  SUPABASE_URL + "/auth/v1/signup",
-  {
-    method: "POST",
-    headers: {
-      "apikey": SUPABASE_KEY,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      email: email,
-      password: motdepasse
-    })
-  }
-);
-
-const authData = await authResponse.json();
-
-if (!authResponse.ok) {
-  throw new Error(authData.message || authData.error || "Erreur lors de la création du compte");
-}
-
 
 // 2️⃣ Enregistrement du profil
 const response = await fetch(
