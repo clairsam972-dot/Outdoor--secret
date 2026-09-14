@@ -441,49 +441,21 @@
   <p>Adultes uniquement • Respect • Sécurité</p>
 <section id="espace-membre" class="section">
   <p class="sourcil">OUTDOOR SECRET</p>
-  <h2>Bienvenue dans votre espace membre</h2>
+  <h2>Mon profil</h2>
 
-  <p>
-    Vous êtes connecté à Outdoor Secret.
-  </p>
+  <div class="carte">
+    <p><strong>Pseudo :</strong> <span id="profil-pseudo"></span></p>
+    <p><strong>Email :</strong> <span id="profil-email"></span></p>
+    <p><strong>Profil :</strong> <span id="profil-type"></span></p>
+    <p><strong>Ville :</strong> <span id="profil-ville"></span></p>
 
-  <div class="cartes">
-
-    <article class="carte">
-      <div class="icone">👤</div>
-      <h3>Mon profil</h3>
-      <p>Consultez et gérez votre profil.</p>
-      <button class="contour">Mon profil</button>
-    </article>
-
-    <article class="carte">
-      <div class="icone">🧭</div>
-      <h3>Les aventures</h3>
-      <p>Découvrez les aventures disponibles.</p>
-      <button class="contour">Découvrir</button>
-    </article>
-
-    <article class="carte">
-      <div class="icone">📍</div>
-      <h3>Les lieux</h3>
-      <p>Découvrez les lieux et expériences.</p>
-      <button class="contour">Voir les lieux</button>
-    </article>
-
-    <article class="carte">
-      <div class="icone">💬</div>
-      <h3>Les rencontres</h3>
-      <p>Découvrez les possibilités de rencontres.</p>
-      <button class="contour">Rencontres</button>
-    </article>
-
+    <p><strong>Présentation :</strong></p>
+    <p id="profil-presentation"></p>
   </div>
 
-  <div class="actes">
-    <button class="primaire" onclick="deconnexion()">
-      Se déconnecter
-    </button>
-  </div>
+  <button class="primaire" onclick="deconnexion()">
+    Se déconnecter
+  </button>
 </section>
 </footer>
 <script>
