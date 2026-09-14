@@ -619,7 +619,46 @@ const motdepasse = document.getElementById("motdepasse-connexion").value;
     if (!response.ok) {
       throw new Error(data.error_description || "Email ou mot de passe incorrect");
     }
+// Récupération du profil du membre connecté
+const user = data.user;
 
+const profilResponse = await fetch(
+  SUPABASE_URL + "/rest/v1/Inscription?Email=eq." + encodeURIComponent(user.email),
+  {
+    method: "GET",
+    headers: {
+      "apikey": SUPABASE_KEY,
+      "Authorization": "Bearer " + data.access_token
+    }
+  }
+);
+
+if (!profilResponse.ok) {
+  throw new Error("Impossible de récupérer votre profil");
+}
+
+const profils = await profilResponse.json();
+
+if (profils.length === 0) {
+  throw new Error("Profil introuvable");
+}
+
+const profil = profils[0];
+
+document.getElementById("profil-pseudo").textContent =
+  profil.Pseudonyme || "";
+
+document.getElementById("profil-email").textContent =
+  profil.Email || user.email;
+
+document.getElementById("profil-type").textContent =
+  profil.Profil || "";
+
+document.getElementById("profil-ville").textContent =
+  profil.ville_departement || "";
+
+document.getElementById("profil-presentation").textContent =
+  profil["Présentation"] || "";
     alert("Connexion réussie ! Bienvenue sur Outdoor Secret.");
 
 formulaireConnexion.reset();
