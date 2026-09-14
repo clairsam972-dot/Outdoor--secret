@@ -564,9 +564,9 @@ if (!response.ok) {
       formulaire.reset();
 
     } catch (error) {
-
-      console.error(error);
-      alert("Erreur lors de l'inscription : " + error.message);
+  console.error(error);
+  alert("ERREUR COMPLÈTE :\n" + JSON.stringify(error, Object.getOwnPropertyNames(error)));
+    }
 
     }
   });
