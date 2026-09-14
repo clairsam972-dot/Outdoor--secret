@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Secrets du plein air</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-<script>eruda.init();</script>
+
 </head>
 
 <body>
@@ -532,7 +530,6 @@ const authResponse = await fetch(
 
 const authData = await authResponse.json();
 
-alert("Reponse Supabase statut " + authResponse.status + " : " + JSON.stringify(authData));
 if (!authResponse.ok) {
   throw new Error(authData.message || authData.error || "Erreur lors de la création du compte");
 }
@@ -567,8 +564,8 @@ if (!response.ok) {
       formulaire.reset();
 
     } catch (error) {
-      console.error(error);
-      alert("ERREUR COMPLÈTE :\n" + JSON.stringify(error, Object.getOwnPropertyNames(error)));
+  console.error(error);
+  alert("Erreur lors de l'inscription : " + error.message);
     }
   });
 });
