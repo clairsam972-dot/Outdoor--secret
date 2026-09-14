@@ -567,10 +567,8 @@ if (!response.ok) {
       formulaire.reset();
 
     } catch (error) {
-  console.error(error);
-  alert("ERREUR COMPLÈTE :\n" + JSON.stringify(error, Object.getOwnPropertyNames(error)));
-    }
-
+      console.error(error);
+      alert("ERREUR COMPLÈTE :\n" + JSON.stringify(error, Object.getOwnPropertyNames(error)));
     }
   });
 });
