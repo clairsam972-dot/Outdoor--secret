@@ -532,7 +532,7 @@ const authResponse = await fetch(
 
 const authData = await authResponse.json();
 
-alert("Réponse Supabase (statut " + authResponse.status + ") :\n" + JSON.stringify(authData));
+alert("Reponse Supabase statut " + authResponse.status + " : " + JSON.stringify(authData));
 if (!authResponse.ok) {
   throw new Error(authData.message || authData.error || "Erreur lors de la création du compte");
 }
