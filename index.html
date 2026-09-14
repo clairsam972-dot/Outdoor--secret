@@ -604,7 +604,9 @@ const motdepasse = document.getElementById("motdepasse-connexion").value;
 
     alert("Connexion réussie ! Bienvenue sur Outdoor Secret.");
 
-    formulaireConnexion.reset();
+window.location.href = "#espace-membre";
+
+formulaireConnexion.reset();
 
   } catch (error) {
 
