@@ -443,28 +443,44 @@
   </div>
   </section>
 
-  <section id="creer-aventure" class="section">
-  <p class="sourcil">CRÉATEUR</p>
-  <h2>Créer une aventure</h2>
+<section id="espace-membre" class="section">
 
-  <form id="formulaire-aventure">
-    <label for="titre-aventure">Titre de l'aventure</label>
-    <input type="text" id="titre-aventure" required>
+  <div class="profil-header">
+    <div class="profil-photo-principale">
+      <img id="photo-principale" src="" alt="Photo de profil" style="display:none;">
+      <div id="placeholder-photo">📷</div>
+    </div>
+    <div class="profil-infos-principales">
+      <h2 id="profil-pseudo-titre"></h2>
+      <p><strong>Profil :</strong> <span id="profil-type"></span></p>
+      <p><strong>Ville :</strong> <span id="profil-ville"></span></p>
+    </div>
+  </div>
 
-    <label for="description-aventure">Description</label>
-    <textarea id="description-aventure" placeholder="Présentez votre aventure..."></textarea>
+  <div class="carte">
+    <p><strong>Email :</strong> <span id="profil-email"></span></p>
+    <p><strong>Présentation :</strong></p>
+    <p id="profil-presentation"></p>
+  </div>
 
-    <div id="liste-indices"></div>
+  <div class="section-galerie">
+    <h3>Ma galerie (privée)</h3>
+    <p>Ajoutez vos photos et vidéos. Elles ne sont visibles que par vous.</p>
 
-    <button type="button" class="contour" id="ajouter-indice">+ Ajouter un indice</button>
+    <input type="file" id="input-media" accept="image/*,video/*" style="display:none;">
+    <button type="button" class="primaire" id="bouton-ajouter-media">+ Ajouter une photo/vidéo</button>
 
-    <button type="submit" class="primaire">Publier l'aventure</button>
+    <div id="galerie-medias"></div>
+  </div>
 
-    <p id="message-aventure"></p>
-  </form>
+  <a class="primaire" href="#decouvrir-aventures">Découvrir les aventures</a>
+  <a class="primaire" href="#creer-aventure">Créer une aventure</a>
+  <a class="primaire" href="#mes-notifications">Mes notifications</a>
 
-  <a class="contour" href="#espace-membre">Retour à mon profil</a>
-  </section>
+  <button class="primaire" onclick="deconnexion()">
+    Se déconnecter
+  </button>
+</section>
 
 <section id="decouvrir-aventures" class="section">
   <p class="sourcil">LA CHASSE</p>
@@ -497,44 +513,28 @@
   <a class="contour" href="#decouvrir-aventures">Retour à la liste</a>
 </section>
 
-<section id="espace-membre" class="section">
+  <section id="creer-aventure" class="section">
+  <p class="sourcil">CRÉATEUR</p>
+  <h2>Créer une aventure</h2>
 
-  <div class="profil-header">
-    <div class="profil-photo-principale">
-      <img id="photo-principale" src="" alt="Photo de profil" style="display:none;">
-      <div id="placeholder-photo">📷</div>
-    </div>
-    <div class="profil-infos-principales">
-      <h2 id="profil-pseudo-titre"></h2>
-      <p><strong>Profil :</strong> <span id="profil-type"></span></p>
-      <p><strong>Ville :</strong> <span id="profil-ville"></span></p>
-    </div>
-  </div>
+  <form id="formulaire-aventure">
+    <label for="titre-aventure">Titre de l'aventure</label>
+    <input type="text" id="titre-aventure" required>
 
-  <div class="carte">
-    <p><strong>Email :</strong> <span id="profil-email"></span></p>
-    <p><strong>Présentation :</strong></p>
-    <p id="profil-presentation"></p>
-  </div>
+    <label for="description-aventure">Description</label>
+    <textarea id="description-aventure" placeholder="Présentez votre aventure..."></textarea>
 
-  <div class="section-galerie">
-    <h3>Ma galerie (privée)</h3>
-    <p>Ajoutez vos photos et vidéos. Elles ne sont visibles que par vous.</p>
+    <div id="liste-indices"></div>
 
-    <input type="file" id="input-media" accept="image/*,video/*" style="display:none;">
-    <button type="button" class="primaire" id="bouton-ajouter-media">+ Ajouter une photo/vidéo</button>
+    <button type="button" class="contour" id="ajouter-indice">+ Ajouter un indice</button>
 
-    <div id="galerie-medias"></div>
-  </div>
+    <button type="submit" class="primaire">Publier l'aventure</button>
 
-  <a class="primaire" href="#creer-aventure">Créer une aventure</a>
-  <a class="primaire" href="#decouvrir-aventures">Découvrir les aventures</a>
-  <a class="primaire" href="#mes-notifications">Mes notifications</a>
+    <p id="message-aventure"></p>
+  </form>
 
-  <button class="primaire" onclick="deconnexion()">
-    Se déconnecter
-  </button>
-</section>
+  <a class="contour" href="#espace-membre">Retour à mon profil</a>
+  </section>
 
 <section id="mes-notifications" class="section">
   <p class="sourcil">CRÉATEUR</p>
