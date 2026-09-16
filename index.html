@@ -443,28 +443,44 @@
   </div>
   </section>
 
-  <section id="creer-aventure" class="section">
-  <p class="sourcil">CRÉATEUR</p>
-  <h2>Créer une aventure</h2>
+<section id="espace-membre" class="section">
 
-  <form id="formulaire-aventure">
-    <label for="titre-aventure">Titre de l'aventure</label>
-    <input type="text" id="titre-aventure" required>
+  <div class="profil-header">
+    <div class="profil-photo-principale">
+      <img id="photo-principale" src="" alt="Photo de profil" style="display:none;">
+      <div id="placeholder-photo">📷</div>
+    </div>
+    <div class="profil-infos-principales">
+      <h2 id="profil-pseudo-titre"></h2>
+      <p><strong>Profil :</strong> <span id="profil-type"></span></p>
+      <p><strong>Ville :</strong> <span id="profil-ville"></span></p>
+    </div>
+  </div>
 
-    <label for="description-aventure">Description</label>
-    <textarea id="description-aventure" placeholder="Présentez votre aventure..."></textarea>
+  <div class="carte">
+    <p><strong>Email :</strong> <span id="profil-email"></span></p>
+    <p><strong>Présentation :</strong></p>
+    <p id="profil-presentation"></p>
+  </div>
 
-    <div id="liste-indices"></div>
+  <div class="section-galerie">
+    <h3>Ma galerie (privée)</h3>
+    <p>Ajoutez vos photos et vidéos. Elles ne sont visibles que par vous.</p>
 
-    <button type="button" class="contour" id="ajouter-indice">+ Ajouter un indice</button>
+    <input type="file" id="input-media" accept="image/*,video/*" style="display:none;">
+    <button type="button" class="primaire" id="bouton-ajouter-media">+ Ajouter une photo/vidéo</button>
 
-    <button type="submit" class="primaire">Publier l'aventure</button>
+    <div id="galerie-medias"></div>
+  </div>
 
-    <p id="message-aventure"></p>
-  </form>
+  <a class="primaire" href="#decouvrir-aventures">Découvrir les aventures</a>
+  <a class="primaire" href="#creer-aventure">Créer une aventure</a>
+  <a class="primaire" href="#mes-notifications">Mes notifications</a>
 
-  <a class="contour" href="#espace-membre">Retour à mon profil</a>
-  </section>
+  <button class="primaire" onclick="deconnexion()">
+    Se déconnecter
+  </button>
+</section>
 
 <section id="decouvrir-aventures" class="section">
   <p class="sourcil">LA CHASSE</p>
@@ -497,44 +513,28 @@
   <a class="contour" href="#decouvrir-aventures">Retour à la liste</a>
 </section>
 
-<section id="espace-membre" class="section">
+  <section id="creer-aventure" class="section">
+  <p class="sourcil">CRÉATEUR</p>
+  <h2>Créer une aventure</h2>
 
-  <div class="profil-header">
-    <div class="profil-photo-principale">
-      <img id="photo-principale" src="" alt="Photo de profil" style="display:none;">
-      <div id="placeholder-photo">📷</div>
-    </div>
-    <div class="profil-infos-principales">
-      <h2 id="profil-pseudo-titre"></h2>
-      <p><strong>Profil :</strong> <span id="profil-type"></span></p>
-      <p><strong>Ville :</strong> <span id="profil-ville"></span></p>
-    </div>
-  </div>
+  <form id="formulaire-aventure">
+    <label for="titre-aventure">Titre de l'aventure</label>
+    <input type="text" id="titre-aventure" required>
 
-  <div class="carte">
-    <p><strong>Email :</strong> <span id="profil-email"></span></p>
-    <p><strong>Présentation :</strong></p>
-    <p id="profil-presentation"></p>
-  </div>
+    <label for="description-aventure">Description</label>
+    <textarea id="description-aventure" placeholder="Présentez votre aventure..."></textarea>
 
-  <div class="section-galerie">
-    <h3>Ma galerie (privée)</h3>
-    <p>Ajoutez vos photos et vidéos. Elles ne sont visibles que par vous.</p>
+    <div id="liste-indices"></div>
 
-    <input type="file" id="input-media" accept="image/*,video/*" style="display:none;">
-    <button type="button" class="primaire" id="bouton-ajouter-media">+ Ajouter une photo/vidéo</button>
+    <button type="button" class="contour" id="ajouter-indice">+ Ajouter un indice</button>
 
-    <div id="galerie-medias"></div>
-  </div>
+    <button type="submit" class="primaire">Publier l'aventure</button>
 
-  <a class="primaire" href="#creer-aventure">Créer une aventure</a>
-  <a class="primaire" href="#decouvrir-aventures">Découvrir les aventures</a>
-  <a class="primaire" href="#mes-notifications">Mes notifications</a>
+    <p id="message-aventure"></p>
+  </form>
 
-  <button class="primaire" onclick="deconnexion()">
-    Se déconnecter
-  </button>
-</section>
+  <a class="contour" href="#espace-membre">Retour à mon profil</a>
+  </section>
 
 <section id="mes-notifications" class="section">
   <p class="sourcil">CRÉATEUR</p>
@@ -554,6 +554,43 @@
 
 const SUPABASE_URL = "https://slvpdoovurqfykplefxe.supabase.co";
 const SUPABASE_KEY = "sb_publishable_LahEM8Av6dykKdttDABUCg_T-TUMMvt";
+
+// Désactive un bouton avec un texte de chargement pendant une action asynchrone
+async function avecChargement(bouton, texteChargement, action) {
+  const texteOriginal = bouton.textContent;
+  bouton.disabled = true;
+  bouton.textContent = texteChargement;
+  try {
+    await action();
+  } finally {
+    bouton.disabled = false;
+    bouton.textContent = texteOriginal;
+  }
+}
+
+// Fait apparaître les cartes en douceur lorsqu'elles entrent dans l'écran
+document.addEventListener("DOMContentLoaded", function() {
+  const elementsAAnimer = document.querySelectorAll(".carte, .carte-chasse, .carte-inscription");
+
+  if (!("IntersectionObserver" in window)) return;
+
+  elementsAAnimer.forEach(function(el) {
+    el.classList.add("reveal");
+  });
+
+  const observateur = new IntersectionObserver(function(entrees) {
+    entrees.forEach(function(entree) {
+      if (entree.isIntersecting) {
+        entree.target.classList.add("visible");
+        observateur.unobserve(entree.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  elementsAAnimer.forEach(function(el) {
+    observateur.observe(el);
+  });
+});
 
 function mettreAJourNavigation(connecte) {
   document.getElementById("nav-inscription").style.display = connecte ? "none" : "";
@@ -637,65 +674,68 @@ formulaires.forEach(function(config) {
     const ville = document.getElementById(config.ville).value;
     const presentation = document.getElementById(config.presentation).value;
     const motdepasse = document.getElementById(config.motdepasse).value;
+    const bouton = formulaire.querySelector('button[type="submit"]');
 
-    try {
+    await avecChargement(bouton, "Création en cours...", async function() {
+      try {
 
-      const authResponse = await fetch(
-        SUPABASE_URL + "/auth/v1/signup",
-        {
-          method: "POST",
-          headers: {
-            "apikey": SUPABASE_KEY,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            email: email,
-            password: motdepasse
-          })
+        const authResponse = await fetch(
+          SUPABASE_URL + "/auth/v1/signup",
+          {
+            method: "POST",
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              email: email,
+              password: motdepasse
+            })
+          }
+        );
+
+        const authData = await authResponse.json();
+
+        if (!authResponse.ok) {
+          throw new Error(authData.message || authData.error || "Erreur lors de la création du compte");
         }
-      );
 
-      const authData = await authResponse.json();
+        const userId = authData.user ? authData.user.id : authData.id;
 
-      if (!authResponse.ok) {
-        throw new Error(authData.message || authData.error || "Erreur lors de la création du compte");
-      }
+        const response = await fetch(
+          SUPABASE_URL + "/rest/v1/Inscription",
+          {
+            method: "POST",
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Authorization": "Bearer " + authData.access_token,
+              "Content-Type": "application/json",
+              "Prefer": "return=minimal"
+            },
+            body: JSON.stringify({
+              "Pseudonyme": pseudo,
+              "Email": email,
+              "ville_departement": ville,
+              "Présentation": presentation,
+              "Profil": config.profil,
+              "user_id": userId
+            })
+          }
+        );
 
-      const userId = authData.user ? authData.user.id : authData.id;
-
-      const response = await fetch(
-        SUPABASE_URL + "/rest/v1/Inscription",
-        {
-          method: "POST",
-          headers: {
-            "apikey": SUPABASE_KEY,
-            "Authorization": "Bearer " + authData.access_token,
-            "Content-Type": "application/json",
-            "Prefer": "return=minimal"
-          },
-          body: JSON.stringify({
-            "Pseudonyme": pseudo,
-            "Email": email,
-            "ville_departement": ville,
-            "Présentation": presentation,
-            "Profil": config.profil,
-            "user_id": userId
-          })
+        if (!response.ok) {
+          const erreur = await response.text();
+          throw new Error(erreur);
         }
-      );
 
-      if (!response.ok) {
-        const erreur = await response.text();
-        throw new Error(erreur);
+        alert("Inscription enregistrée avec succès !");
+        formulaire.reset();
+
+      } catch (error) {
+        console.error(error);
+        alert("Erreur lors de l'inscription : " + error.message);
       }
-
-      alert("Inscription enregistrée avec succès !");
-      formulaire.reset();
-
-    } catch (error) {
-      console.error(error);
-      alert("Erreur lors de l'inscription : " + error.message);
-    }
+    });
   });
 });
 
@@ -729,8 +769,6 @@ async function afficherProfil(accessToken, userEmail) {
   document.getElementById("profil-type").textContent = profil.Profil || "";
   document.getElementById("profil-ville").textContent = profil.ville_departement || "";
   document.getElementById("profil-presentation").textContent = profil["Présentation"] || "";
-
-  window.location.hash = "espace-membre";
 }
   // CONNEXION DES MEMBRES
 
@@ -741,45 +779,48 @@ formulaireConnexion.addEventListener("submit", async function(e) {
 
   const email = document.getElementById("email-connexion").value.trim().toLowerCase();
   const motdepasse = document.getElementById("motdepasse-connexion").value;
+  const bouton = formulaireConnexion.querySelector('button[type="submit"]');
 
-  try {
+  await avecChargement(bouton, "Connexion...", async function() {
+    try {
 
-    const response = await fetch(
-      SUPABASE_URL + "/auth/v1/token?grant_type=password",
-      {
-        method: "POST",
-        headers: {
-          "apikey": SUPABASE_KEY,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          email: email,
-          password: motdepasse
-        })
+      const response = await fetch(
+        SUPABASE_URL + "/auth/v1/token?grant_type=password",
+        {
+          method: "POST",
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            email: email,
+            password: motdepasse
+          })
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error_description || "Email ou mot de passe incorrect");
       }
-    );
 
-    const data = await response.json();
+      localStorage.setItem("outdoor_access_token", data.access_token);
+      localStorage.setItem("outdoor_refresh_token", data.refresh_token);
 
-    if (!response.ok) {
-      throw new Error(data.error_description || "Email ou mot de passe incorrect");
+      mettreAJourNavigation(true);
+      await afficherProfil(data.access_token, data.user.email);
+      window.location.hash = "espace-membre";
+
+      formulaireConnexion.reset();
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert("Erreur de connexion : " + error.message);
     }
-
-    localStorage.setItem("outdoor_access_token", data.access_token);
-    localStorage.setItem("outdoor_refresh_token", data.refresh_token);
-
-    await afficherProfil(data.access_token, data.user.email);
-    mettreAJourNavigation(true);
-
-    formulaireConnexion.reset();
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert("Erreur de connexion : " + error.message);
-  }
-  
+  });
 });
 
 // Reconnexion automatique si une session est déjà enregistrée
@@ -804,8 +845,9 @@ window.addEventListener("DOMContentLoaded", async function() {
 
       const user = await userResponse.json();
 
-      await afficherProfil(token, user.email);
       mettreAJourNavigation(true);
+      await afficherProfil(token, user.email);
+      window.location.hash = "espace-membre";
 
     } catch (error) {
       console.error("Session invalide :", error);
@@ -863,102 +905,106 @@ formulaireAventure.addEventListener("submit", async function(e) {
     return;
   }
 
-  try {
+  const bouton = formulaireAventure.querySelector('button[type="submit"]');
 
-    const userResponse = await fetch(SUPABASE_URL + "/auth/v1/user", {
-      headers: {
-        "apikey": SUPABASE_KEY,
-        "Authorization": "Bearer " + token
-      }
-    });
+  await avecChargement(bouton, "Publication en cours...", async function() {
+    try {
 
-    if (!userResponse.ok) {
-      throw new Error("Session expirée, reconnectez-vous.");
-    }
-
-    const user = await userResponse.json();
-
-    const profilResponse = await fetch(
-      SUPABASE_URL + "/rest/v1/Inscription?Email=eq." + encodeURIComponent(user.email),
-      {
+      const userResponse = await fetch(SUPABASE_URL + "/auth/v1/user", {
         headers: {
           "apikey": SUPABASE_KEY,
           "Authorization": "Bearer " + token
         }
-      }
-    );
-
-    const profils = await profilResponse.json();
-    const pseudo = profils.length > 0 ? profils[0].Pseudonyme : user.email;
-
-    const aventureResponse = await fetch(
-      SUPABASE_URL + "/rest/v1/Aventures",
-      {
-        method: "POST",
-        headers: {
-          "apikey": SUPABASE_KEY,
-          "Authorization": "Bearer " + token,
-          "Content-Type": "application/json",
-          "Prefer": "return=representation"
-        },
-        body: JSON.stringify({
-          user_id: user.id,
-          createur_pseudo: pseudo,
-          titre: titre,
-          description: description
-        })
-      }
-    );
-
-    if (!aventureResponse.ok) {
-      const erreur = await aventureResponse.text();
-      throw new Error(erreur);
-    }
-
-    const aventureCreee = await aventureResponse.json();
-    const aventureId = aventureCreee[0].id;
-
-    const indicesAEnvoyer = [];
-
-    blocsIndices.forEach(function(bloc, index) {
-      indicesAEnvoyer.push({
-        aventure_id: aventureId,
-        ordre: index + 1,
-        indice: bloc.querySelector(".champ-indice").value,
-        reponse: bloc.querySelector(".champ-reponse").value.trim().toLowerCase()
       });
-    });
 
-    const indicesResponse = await fetch(
-      SUPABASE_URL + "/rest/v1/Indices",
-      {
-        method: "POST",
-        headers: {
-          "apikey": SUPABASE_KEY,
-          "Authorization": "Bearer " + token,
-          "Content-Type": "application/json",
-          "Prefer": "return=minimal"
-        },
-        body: JSON.stringify(indicesAEnvoyer)
+      if (!userResponse.ok) {
+        throw new Error("Session expirée, reconnectez-vous.");
       }
-    );
 
-    if (!indicesResponse.ok) {
-      const erreur = await indicesResponse.text();
-      throw new Error(erreur);
+      const user = await userResponse.json();
+
+      const profilResponse = await fetch(
+        SUPABASE_URL + "/rest/v1/Inscription?Email=eq." + encodeURIComponent(user.email),
+        {
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + token
+          }
+        }
+      );
+
+      const profils = await profilResponse.json();
+      const pseudo = profils.length > 0 ? profils[0].Pseudonyme : user.email;
+
+      const aventureResponse = await fetch(
+        SUPABASE_URL + "/rest/v1/Aventures",
+        {
+          method: "POST",
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json",
+            "Prefer": "return=representation"
+          },
+          body: JSON.stringify({
+            user_id: user.id,
+            createur_pseudo: pseudo,
+            titre: titre,
+            description: description
+          })
+        }
+      );
+
+      if (!aventureResponse.ok) {
+        const erreur = await aventureResponse.text();
+        throw new Error(erreur);
+      }
+
+      const aventureCreee = await aventureResponse.json();
+      const aventureId = aventureCreee[0].id;
+
+      const indicesAEnvoyer = [];
+
+      blocsIndices.forEach(function(bloc, index) {
+        indicesAEnvoyer.push({
+          aventure_id: aventureId,
+          ordre: index + 1,
+          indice: bloc.querySelector(".champ-indice").value,
+          reponse: bloc.querySelector(".champ-reponse").value.trim().toLowerCase()
+        });
+      });
+
+      const indicesResponse = await fetch(
+        SUPABASE_URL + "/rest/v1/Indices",
+        {
+          method: "POST",
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json",
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify(indicesAEnvoyer)
+        }
+      );
+
+      if (!indicesResponse.ok) {
+        const erreur = await indicesResponse.text();
+        throw new Error(erreur);
+      }
+
+      alert("Votre aventure a été publiée avec succès !");
+      formulaireAventure.reset();
+      listeIndices.innerHTML = "";
+      boutonAjouterIndice.click();
+
+      window.location.hash = "espace-membre";
+
+    } catch (error) {
+      console.error(error);
+      alert("Erreur lors de la création de l'aventure : " + error.message);
     }
-
-    alert("Votre aventure a été publiée avec succès !");
-    formulaireAventure.reset();
-    listeIndices.innerHTML = "";
-    boutonAjouterIndice.click();
-
-    window.location.hash = "espace-membre";
-
-  } catch (error) {
-    console.error(error);
-    alert("Erreur lors de la création de l'aventure : " + error.message);
-  }
+  });
 
 });
 
@@ -973,7 +1019,7 @@ async function chargerListeAventures() {
   if (!token) return;
 
   const conteneur = document.getElementById("liste-aventures");
-  conteneur.innerHTML = "Chargement...";
+  conteneur.innerHTML = '<p class="chargement">Chargement des aventures...</p>';
 
   try {
     const response = await fetch(
@@ -1091,62 +1137,65 @@ document.getElementById("bouton-valider-reponse").addEventListener("click", func
   // Prévenir le créateur que l'aventure a été résolue
 document.getElementById("bouton-prevenir-createur").addEventListener("click", async function() {
   const token = localStorage.getItem("outdoor_access_token");
+  const bouton = this;
 
-  try {
-    const userResponse = await fetch(SUPABASE_URL + "/auth/v1/user", {
-      headers: {
-        "apikey": SUPABASE_KEY,
-        "Authorization": "Bearer " + token
-      }
-    });
-
-    const user = await userResponse.json();
-
-    const profilResponse = await fetch(
-      SUPABASE_URL + "/rest/v1/Inscription?Email=eq." + encodeURIComponent(user.email),
-      {
+  await avecChargement(bouton, "Envoi en cours...", async function() {
+    try {
+      const userResponse = await fetch(SUPABASE_URL + "/auth/v1/user", {
         headers: {
           "apikey": SUPABASE_KEY,
           "Authorization": "Bearer " + token
         }
+      });
+
+      const user = await userResponse.json();
+
+      const profilResponse = await fetch(
+        SUPABASE_URL + "/rest/v1/Inscription?Email=eq." + encodeURIComponent(user.email),
+        {
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + token
+          }
+        }
+      );
+
+      const profils = await profilResponse.json();
+      const pseudo = profils.length > 0 ? profils[0].Pseudonyme : user.email;
+
+      const response = await fetch(
+        SUPABASE_URL + "/rest/v1/Notifications",
+        {
+          method: "POST",
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json",
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify({
+            aventure_id: aventureEnCours.id,
+            createur_id: aventureEnCours.user_id,
+            solveur_id: user.id,
+            solveur_pseudo: pseudo,
+            message: pseudo + " a résolu votre aventure \"" + aventureEnCours.titre + "\" !"
+          })
+        }
+      );
+
+      if (!response.ok) {
+        const erreur = await response.text();
+        throw new Error(erreur);
       }
-    );
 
-    const profils = await profilResponse.json();
-    const pseudo = profils.length > 0 ? profils[0].Pseudonyme : user.email;
+      alert("Le créateur a été prévenu !");
+      window.location.hash = "decouvrir-aventures";
 
-    const response = await fetch(
-      SUPABASE_URL + "/rest/v1/Notifications",
-      {
-        method: "POST",
-        headers: {
-          "apikey": SUPABASE_KEY,
-          "Authorization": "Bearer " + token,
-          "Content-Type": "application/json",
-          "Prefer": "return=minimal"
-        },
-        body: JSON.stringify({
-          aventure_id: aventureEnCours.id,
-          createur_id: aventureEnCours.user_id,
-          solveur_id: user.id,
-          solveur_pseudo: pseudo,
-          message: pseudo + " a résolu votre aventure \"" + aventureEnCours.titre + "\" !"
-        })
-      }
-    );
-
-    if (!response.ok) {
-      const erreur = await response.text();
-      throw new Error(erreur);
+    } catch (error) {
+      console.error(error);
+      alert("Erreur lors de l'envoi de la notification : " + error.message);
     }
-
-    alert("Le créateur a été prévenu !");
-    window.location.hash = "decouvrir-aventures";
-
-  } catch (error) {
-    console.error(error);
-    alert("Erreur lors de l'envoi de la notification : " + error.message);
-  }
+  });
 });
 
 // Charge et affiche les notifications du créateur connecté
@@ -1155,7 +1204,7 @@ async function chargerNotifications() {
   if (!token) return;
 
   const conteneur = document.getElementById("liste-notifications");
-  conteneur.innerHTML = "Chargement...";
+  conteneur.innerHTML = '<p class="chargement">Chargement des notifications...</p>';
 
   try {
     const response = await fetch(
