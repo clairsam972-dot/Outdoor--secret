@@ -511,6 +511,15 @@
 
   <a class="contour" href="#decouvrir-aventures">Retour à la liste</a>
 </section>
+  <section id="mes-notifications" class="section">
+  <p class="sourcil">OUTDOOR SECRET</p>
+  <h2>Mes notifications</h2>
+
+  <div id="liste-notifications"></div>
+
+  <a class="contour" href="#espace-membre">Retour à mon profil</a>
+  <a class="primaire" href="#mes-notifications">Mes notifications</a>
+</section>
 </footer>
 <script>
 
@@ -1095,6 +1104,54 @@ document.getElementById("bouton-prevenir-createur").addEventListener("click", as
 window.addEventListener("hashchange", function() {
   if (window.location.hash === "#decouvrir-aventures") {
     chargerListeAventures();
+  }
+});
+  // Charge et affiche les notifications du créateur connecté
+async function chargerNotifications() {
+  const token = localStorage.getItem("outdoor_access_token");
+  if (!token) return;
+
+  const conteneur = document.getElementById("liste-notifications");
+  conteneur.innerHTML = "Chargement...";
+
+  try {
+    const response = await fetch(
+      SUPABASE_URL + "/rest/v1/Notifications?select=*&order=created_at.desc",
+      {
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": "Bearer " + token
+        }
+      }
+    );
+
+    const notifications = await response.json();
+
+    if (notifications.length === 0) {
+      conteneur.innerHTML = "<p>Vous n'avez aucune notification pour le moment.</p>";
+      return;
+    }
+
+    conteneur.innerHTML = "";
+
+    notifications.forEach(function(notif) {
+      const bloc = document.createElement("div");
+      bloc.className = "carte";
+      bloc.innerHTML =
+        "<p>" + notif.message + "</p>" +
+        "<p><em>" + new Date(notif.created_at).toLocaleString("fr-FR") + "</em></p>";
+      conteneur.appendChild(bloc);
+    });
+
+  } catch (error) {
+    console.error(error);
+    conteneur.innerHTML = "<p>Erreur lors du chargement des notifications.</p>";
+  }
+}
+
+window.addEventListener("hashchange", function() {
+  if (window.location.hash === "#mes-notifications") {
+    chargerNotifications();
   }
 });
 async function deconnexion() {
