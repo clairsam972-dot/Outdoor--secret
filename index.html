@@ -962,9 +962,9 @@ async function televerserMedia(file) {
     return;
   }
 
-  const TAILLE_MAX = 25 * 1024 * 1024;
+  const TAILLE_MAX = 200 * 1024 * 1024;
   if (file.size > TAILLE_MAX) {
-    alert("Le fichier est trop volumineux (25 Mo maximum).");
+    alert("Le fichier est trop volumineux (200 Mo maximum).");
     return;
   }
 
