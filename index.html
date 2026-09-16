@@ -936,7 +936,7 @@ async function creerVignetteMedia(fichier, token) {
   if (!signResponse.ok) return null;
 
   const { signedURL } = await signResponse.json();
-  const urlMedia = SUPABASE_URL + signedURL;
+  const urlMedia = SUPABASE_URL + (signedURL.startsWith("/storage/v1") ? signedURL : "/storage/v1" + signedURL);
 
   const vignette = document.createElement("div");
   vignette.className = "media-galerie";
