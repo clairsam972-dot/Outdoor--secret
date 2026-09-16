@@ -1612,10 +1612,51 @@ document.getElementById("bouton-valider-reponse").addEventListener("click", func
   }
 });
 
-// Le paiement en ligne (Stripe) n'est pas encore branché : le joker
-// ne débloque rien pour l'instant, il informe juste le joueur.
-document.getElementById("bouton-joker").addEventListener("click", function() {
-  alert("Le paiement en ligne pour débloquer un joker arrive bientôt !");
+// Achat d'un joker : crée une session de paiement Stripe côté serveur
+// (Supabase Edge Function) puis redirige vers la page de paiement.
+document.getElementById("bouton-joker").addEventListener("click", async function() {
+  const token = localStorage.getItem("outdoor_access_token");
+
+  if (!token) {
+    alert("Vous devez être connecté pour utiliser un joker.");
+    return;
+  }
+
+  if (!aventureEnCours || !indicesEnCours[indiceActuelIndex]) {
+    alert("Aucune énigme en cours.");
+    return;
+  }
+
+  const bouton = this;
+
+  await avecChargement(bouton, "Redirection vers le paiement...", async function() {
+    try {
+      const response = await fetch(SUPABASE_URL + "/functions/v1/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": "Bearer " + token,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          aventure_id: aventureEnCours.id,
+          indice_id: indicesEnCours[indiceActuelIndex].id
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.url) {
+        throw new Error(data.error || "Erreur inconnue");
+      }
+
+      window.location.href = data.url;
+
+    } catch (error) {
+      console.error(error);
+      alert("Impossible de démarrer le paiement du joker. Réessayez plus tard.");
+    }
+  });
 });
 
   // Prévenir le créateur que l'aventure a été résolue
@@ -1764,6 +1805,83 @@ async function deconnexion() {
   window.location.hash = "connexion";
   alert("Vous êtes déconnecté.");
 }
+
+// Retour depuis Stripe après le paiement d'un joker : on recharge
+// l'aventure concernée, on vérifie que le webhook a bien confirmé le
+// paiement, puis on révèle la réponse de l'indice en cours.
+async function gererRetourJoker() {
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get("joker_session_id");
+  const aventureId = params.get("aventure_id");
+  const indiceId = params.get("indice_id");
+
+  if (!sessionId || !aventureId || !indiceId) return;
+
+  // Nettoie l'URL pour ne pas re-déclencher la vérification au rechargement
+  window.history.replaceState(null, "", window.location.pathname + "#jouer-aventure");
+
+  const token = localStorage.getItem("outdoor_access_token");
+  if (!token) return;
+
+  try {
+    const reponseAventures = await fetch(
+      SUPABASE_URL + "/rest/v1/Aventures?id=eq." + aventureId + "&select=*",
+      {
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": "Bearer " + token
+        }
+      }
+    );
+    const aventures = await reponseAventures.json();
+
+    if (aventures.length === 0) return;
+
+    await demarrerAventure(aventures[0]);
+
+    const index = indicesEnCours.findIndex(function(indice) {
+      return String(indice.id) === String(indiceId);
+    });
+
+    if (index === -1) return;
+
+    indiceActuelIndex = index;
+    afficherIndiceActuel();
+
+    // Le webhook Stripe peut mettre quelques secondes à confirmer le paiement
+    let paye = false;
+    for (let essai = 0; essai < 8 && !paye; essai++) {
+      const reponseJoker = await fetch(
+        SUPABASE_URL + "/rest/v1/Jokers?session_id=eq." + encodeURIComponent(sessionId) + "&paid=eq.true&select=id",
+        {
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + token
+          }
+        }
+      );
+      const jokers = await reponseJoker.json();
+      paye = jokers.length > 0;
+
+      if (!paye) {
+        await new Promise(function(resolve) { setTimeout(resolve, 1500); });
+      }
+    }
+
+    if (paye) {
+      const reponse = indicesEnCours[indiceActuelIndex].reponse;
+      document.getElementById("reponse-utilisateur").value = reponse;
+      document.getElementById("message-jeu").textContent = "Joker activé : réponse « " + reponse + " ».";
+    } else {
+      document.getElementById("message-jeu").textContent = "Paiement en cours de confirmation, réessayez dans un instant.";
+    }
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+gererRetourJoker();
 </script>
 </body>
 </html>
