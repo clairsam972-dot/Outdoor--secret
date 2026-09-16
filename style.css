@@ -423,6 +423,24 @@ section.compacte > p {
   font-size: 40px;
 }
 
+.bouton-camera-profil {
+  display: block;
+  margin-top: 12px;
+  padding: 8px 14px;
+  font-size: 14px;
+}
+
+.section-galerie #bouton-prendre-photo {
+  margin-left: 10px;
+}
+
+@media (max-width: 700px) {
+  .section-galerie #bouton-prendre-photo {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}
+
 /* Galerie privée du profil */
 .section-galerie {
   margin: 30px 0;
