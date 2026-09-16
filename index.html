@@ -591,6 +591,41 @@ if (!response.ok) {
     }
   });
 });
+
+// Récupère le profil et l'affiche dans la page
+async function afficherProfil(accessToken, userEmail) {
+  const profilResponse = await fetch(
+    SUPABASE_URL + "/rest/v1/Inscription?Email=eq." + encodeURIComponent(userEmail),
+    {
+      method: "GET",
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + accessToken
+      }
+    }
+  );
+
+  if (!profilResponse.ok) {
+    throw new Error("Impossible de récupérer votre profil");
+  }
+
+  const profils = await profilResponse.json();
+
+  if (profils.length === 0) {
+    throw new Error("Profil introuvable");
+  }
+
+  const profil = profils[0];
+
+  document.getElementById("profil-pseudo").textContent = profil.Pseudonyme || "";
+  document.getElementById("profil-email").textContent = profil.Email || userEmail;
+  document.getElementById("profil-type").textContent = profil.Profil || "";
+  document.getElementById("profil-ville").textContent = profil.ville_departement || "";
+  document.getElementById("profil-presentation").textContent = profil["Présentation"] || "";
+
+  window.location.hash = "espace-membre";
+}
+
   // CONNEXION DES MEMBRES
 
 const formulaireConnexion = document.getElementById("formulaire-connexion");
@@ -598,8 +633,8 @@ const formulaireConnexion = document.getElementById("formulaire-connexion");
 formulaireConnexion.addEventListener("submit", async function(e) {
   e.preventDefault();
 
-const email = document.getElementById("email-connexion").value.trim().toLowerCase();
-const motdepasse = document.getElementById("motdepasse-connexion").value;
+  const email = document.getElementById("email-connexion").value.trim().toLowerCase();
+  const motdepasse = document.getElementById("motdepasse-connexion").value;
 
   try {
 
@@ -623,51 +658,13 @@ const motdepasse = document.getElementById("motdepasse-connexion").value;
     if (!response.ok) {
       throw new Error(data.error_description || "Email ou mot de passe incorrect");
     }
-// Récupération du profil du membre connecté
-const user = data.user;
 
-const profilResponse = await fetch(
-  SUPABASE_URL + "/rest/v1/Inscription?Email=eq." + encodeURIComponent(user.email),
-  {
-    method: "GET",
-    headers: {
-      "apikey": SUPABASE_KEY,
-      "Authorization": "Bearer " + data.access_token
-    }
-  }
-);
+    localStorage.setItem("outdoor_access_token", data.access_token);
+    localStorage.setItem("outdoor_refresh_token", data.refresh_token);
 
-if (!profilResponse.ok) {
-  throw new Error("Impossible de récupérer votre profil");
-}
+    await afficherProfil(data.access_token, data.user.email);
 
-const profils = await profilResponse.json();
-
-if (profils.length === 0) {
-  throw new Error("Profil introuvable");
-}
-
-const profil = profils[0];
-
-document.getElementById("profil-pseudo").textContent =
-  profil.Pseudonyme || "";
-
-document.getElementById("profil-email").textContent =
-  profil.Email || user.email;
-
-document.getElementById("profil-type").textContent =
-  profil.Profil || "";
-
-document.getElementById("profil-ville").textContent =
-  profil.ville_departement || "";
-
-document.getElementById("profil-presentation").textContent =
-  profil["Présentation"] || "";
-    alert("Connexion réussie ! Bienvenue sur Outdoor Secret.");
-
-formulaireConnexion.reset();
-
-window.location.hash = "espace-membre";
+    formulaireConnexion.reset();
 
   } catch (error) {
 
@@ -677,10 +674,65 @@ window.location.hash = "espace-membre";
   }
 
 });
-  function deconnexion() {
+
+// Reconnexion automatique si une session est déjà enregistrée
+window.addEventListener("DOMContentLoaded", async function() {
+  const token = localStorage.getItem("outdoor_access_token");
+
+  if (token) {
+    try {
+      const userResponse = await fetch(
+        SUPABASE_URL + "/auth/v1/user",
+        {
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + token
+          }
+        }
+      );
+
+      if (!userResponse.ok) {
+        throw new Error("Session expirée");
+      }
+
+      const user = await userResponse.json();
+
+      await afficherProfil(token, user.email);
+
+    } catch (error) {
+      console.error("Session invalide :", error);
+      localStorage.removeItem("outdoor_access_token");
+      localStorage.removeItem("outdoor_refresh_token");
+    }
+  }
+});
+
+async function deconnexion() {
+  const token = localStorage.getItem("outdoor_access_token");
+
+  try {
+    if (token) {
+      await fetch(
+        SUPABASE_URL + "/auth/v1/logout",
+        {
+          method: "POST",
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + token
+          }
+        }
+      );
+    }
+  } catch (error) {
+    console.error("Erreur lors de la déconnexion :", error);
+  }
+
+  localStorage.removeItem("outdoor_access_token");
+  localStorage.removeItem("outdoor_refresh_token");
+
   window.location.hash = "connexion";
   alert("Vous êtes déconnecté.");
-  }
+}
 </script>
 </body>
 </html>
