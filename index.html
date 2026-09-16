@@ -84,8 +84,8 @@
     </p>
 
     <div class="actes">
-      <button class="primaire">Découvrir les expériences</button>
-      <button class="contour">Créer une aventure</button>
+      <a class="primaire" href="#experiences">Découvrir les expériences</a>
+      <button class="contour" onclick="allerCreerAventure()">Créer une aventure</button>
     </div>
   </div>
 </section>
@@ -104,21 +104,21 @@
       <div class="icone">🏕️</div>
       <h3>Escapades</h3>
       <p>Partez à la découverte de lieux et d'aventures originales.</p>
-      <button class="contour">Découvrir</button>
+      <a class="contour" href="#chasse">Découvrir</a>
     </article>
 
     <article class="carte">
       <div class="icone">🧭</div>
       <h3>Rendez-vous</h3>
       <p>Trouvez des expériences et des rencontres près de chez vous.</p>
-      <button class="contour">Explorer</button>
+      <a class="contour" href="#inscription">Explorer</a>
     </article>
 
     <article class="carte">
       <div class="icone">🌲</div>
       <h3>Nature</h3>
       <p>Profitez de la nature dans un cadre respectueux et sécurisé.</p>
-      <button class="contour">Voir les lieux</button>
+      <a class="contour" href="#aventure-nature">Voir les lieux</a>
     </article>
 
   </div>
@@ -148,7 +148,7 @@
         <span>👥 2 à 6 personnes</span>
         <span>⏱️ 2 à 4 h</span>
       </div>
-      <button class="primaire">Voir l'aventure</button>
+      <a class="primaire" href="#aventure-nature">Voir l'aventure</a>
     </article>
 
     <article class="carte-chasse">
@@ -163,7 +163,7 @@
         <span>👥 2 à 8 personnes</span>
         <span>⏱️ Une soirée</span>
       </div>
-      <a class="primaire" href="#aventure-nature">Voir l'aventure</a>
+      <a class="primaire" href="#aventure-nuit">Voir l'aventure</a>
     </article>
 
     <article class="carte-chasse">
@@ -178,7 +178,7 @@
         <span>👥 2 à 10 personnes</span>
         <span>⏱️ 3 à 5 h</span>
       </div>
-      <button class="primaire">Voir l'aventure</button>
+      <a class="primaire" href="#aventure-defi">Voir l'aventure</a>
     </article>
 
   </div>
@@ -192,12 +192,13 @@
   </p>
 
   <div class="actes">
-    <button class="primaire">Créer une aventure</button>
-    <button class="contour">En savoir plus</button>
+    <button class="primaire" onclick="allerCreerAventure()">Créer une aventure</button>
+    <a class="contour" href="#chasse">En savoir plus</a>
   </div>
 </section>
 
 <section id="aventure-nature" class="section">
+  <p><a class="contour" href="#chasse">← Retour à la chasse</a></p>
   <p class="sourcil">ÉVASION NATURE</p>
   <h2>Une aventure au cœur de la nature</h2>
 
@@ -213,7 +214,51 @@
   </div>
 
   <div class="actes">
-    <button class="primaire">Réserver</button>
+    <a class="primaire" href="#inscription">Réserver</a>
+    <a class="contour" href="#chasse">Retour</a>
+  </div>
+</section>
+
+<section id="aventure-nuit" class="section">
+  <p><a class="contour" href="#chasse">← Retour à la chasse</a></p>
+  <p class="sourcil">NUIT SAUVAGE</p>
+  <h2>Une expérience nocturne et sauvage</h2>
+
+  <p>
+    Une aventure en soirée pensée pour celles et ceux qui
+    aiment l'imprévu, à vivre en pleine nature.
+  </p>
+
+  <div class="infos">
+    <span>📍 Île-de-France</span>
+    <span>👥 2 à 8 personnes</span>
+    <span>⏱️ Une soirée</span>
+  </div>
+
+  <div class="actes">
+    <a class="primaire" href="#inscription">Réserver</a>
+    <a class="contour" href="#chasse">Retour</a>
+  </div>
+</section>
+
+<section id="aventure-defi" class="section">
+  <p><a class="contour" href="#chasse">← Retour à la chasse</a></p>
+  <p class="sourcil">DÉFI MYSTÈRE</p>
+  <h2>Une chasse au trésor moderne</h2>
+
+  <p>
+    Résolvez des énigmes et relevez des défis le long d'un
+    parcours tenu secret jusqu'au dernier moment.
+  </p>
+
+  <div class="infos">
+    <span>📍 Lieu secret</span>
+    <span>👥 2 à 10 personnes</span>
+    <span>⏱️ 3 à 5 h</span>
+  </div>
+
+  <div class="actes">
+    <a class="primaire" href="#inscription">Réserver</a>
     <a class="contour" href="#chasse">Retour</a>
   </div>
 </section>
@@ -598,9 +643,15 @@ document.addEventListener("DOMContentLoaded", function() {
 // Vue plein écran : "La Chasse" et "Découvrir les aventures" masquent le
 // reste de la page pour n'afficher que la section concernée, avec retour.
 const groupesPleinEcran = [
-  ["chasse", "aventure-nature"],
+  ["chasse", "aventure-nature", "aventure-nuit", "aventure-defi"],
   ["decouvrir-aventures", "jouer-aventure"]
 ];
+
+// Envoie vers le formulaire de création si connecté, sinon vers l'inscription.
+function allerCreerAventure() {
+  const token = localStorage.getItem("outdoor_access_token");
+  window.location.hash = token ? "creer-aventure" : "inscription";
+}
 
 function trouverGroupePleinEcran(id) {
   return groupesPleinEcran.find(function(groupe) {
