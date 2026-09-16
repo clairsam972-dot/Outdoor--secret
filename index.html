@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Secrets du plein air</title>
   <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
@@ -18,15 +17,16 @@
     <a href="#chasse">La Chasse</a>
     <a href="#creer">Créateur</a>
     <a href="#securite">Sécurité</a>
-  <button class="contour" onclick="location.href='#rapport'">Rapport</button>
+    <button class="contour" onclick="location.href='#rapport'">Rapport</button>
 
-  <a href="#inscription" class="primaire" id="nav-inscription">Inscription +18</a>
-  <a href="#connexion" class="contour" id="nav-connexion">Se connecter</a>
+    <a href="#inscription" class="primaire" id="nav-inscription">Inscription +18</a>
+    <a href="#connexion" class="contour" id="nav-connexion">Se connecter</a>
 
-  <a href="#espace-membre" class="contour" id="nav-profil" style="display:none;">Mon profil</a>
-  <a href="#decouvrir-aventures" class="primaire" id="nav-decouvrir" style="display:none;">Découvrir les aventures</a>
-  <a href="#creer-aventure" class="contour" id="nav-creer-aventure" style="display:none;">Créer une aventure</a>
-  <button class="contour" id="nav-deconnexion" style="display:none;" onclick="deconnexion()">Se déconnecter</button>
+    <a href="#espace-membre" class="contour" id="nav-profil" style="display:none;">Mon profil</a>
+    <a href="#decouvrir-aventures" class="primaire" id="nav-decouvrir" style="display:none;">Découvrir les aventures</a>
+    <a href="#creer-aventure" class="contour" id="nav-creer-aventure" style="display:none;">Créer une aventure</a>
+    <button class="contour" id="nav-deconnexion" style="display:none;" onclick="deconnexion()">Se déconnecter</button>
+  </nav>
 </header>
 
 <main>
@@ -442,6 +442,7 @@
     </form>
   </div>
   </section>
+
   <section id="creer-aventure" class="section">
   <p class="sourcil">CRÉATEUR</p>
   <h2>Créer une aventure</h2>
@@ -464,38 +465,14 @@
 
   <a class="contour" href="#espace-membre">Retour à mon profil</a>
   </section>
-<footer>
-  <p>© 2026 Secrets du plein air</p>
-  <p>Adultes uniquement • Respect • Sécurité</p>
-<section id="espace-membre" class="section">
-  <p class="sourcil">OUTDOOR SECRET</p>
-  <h2>Mon profil</h2>
 
-  <div class="carte">
-    <p><strong>Pseudo :</strong> <span id="profil-pseudo"></span></p>
-    <p><strong>Email :</strong> <span id="profil-email"></span></p>
-    <p><strong>Profil :</strong> <span id="profil-type"></span></p>
-    <p><strong>Ville :</strong> <span id="profil-ville"></span></p>
-
-    <p><strong>Présentation :</strong></p>
-    <p id="profil-presentation"></p>
-  </div>
-
-  <a class="primaire" href="#creer-aventure">Créer une aventure</a>
-  
-
-  <button class="primaire" onclick="deconnexion()">
-    Se déconnecter
-  </button>
-</section>
-  <section id="decouvrir-aventures" class="section">
+<section id="decouvrir-aventures" class="section">
   <p class="sourcil">LA CHASSE</p>
   <h2>Aventures à découvrir</h2>
 
   <div id="liste-aventures"></div>
 
   <a class="contour" href="#espace-membre">Retour à mon profil</a>
-    <a class="primaire" href="#decouvrir-aventures">Découvrir les aventures</a>
 </section>
 
 <section id="jouer-aventure" class="section">
@@ -519,20 +496,51 @@
 
   <a class="contour" href="#decouvrir-aventures">Retour à la liste</a>
 </section>
-  <section id="mes-notifications" class="section">
+
+<section id="mes-notifications" class="section">
   <p class="sourcil">OUTDOOR SECRET</p>
   <h2>Mes notifications</h2>
 
   <div id="liste-notifications"></div>
 
   <a class="contour" href="#espace-membre">Retour à mon profil</a>
-  <a class="primaire" href="#mes-notifications">Mes notifications</a>
 </section>
+
+<section id="espace-membre" class="section">
+  <p class="sourcil">OUTDOOR SECRET</p>
+  <h2>Mon profil</h2>
+
+  <div class="carte">
+    <p><strong>Pseudo :</strong> <span id="profil-pseudo"></span></p>
+    <p><strong>Email :</strong> <span id="profil-email"></span></p>
+    <p><strong>Profil :</strong> <span id="profil-type"></span></p>
+    <p><strong>Ville :</strong> <span id="profil-ville"></span></p>
+
+    <p><strong>Présentation :</strong></p>
+    <p id="profil-presentation"></p>
+  </div>
+
+  <a class="primaire" href="#creer-aventure">Créer une aventure</a>
+  <a class="primaire" href="#decouvrir-aventures">Découvrir les aventures</a>
+  <a class="primaire" href="#mes-notifications">Mes notifications</a>
+
+  <button class="primaire" onclick="deconnexion()">
+    Se déconnecter
+  </button>
+</section>
+
+</main>
+
+<footer>
+  <p>© 2026 Secrets du plein air</p>
+  <p>Adultes uniquement • Respect • Sécurité</p>
 </footer>
+
 <script>
 
 const SUPABASE_URL = "https://slvpdoovurqfykplefxe.supabase.co";
 const SUPABASE_KEY = "sb_publishable_LahEM8Av6dykKdttDABUCg_T-TUMMvt";
+
 function mettreAJourNavigation(connecte) {
   document.getElementById("nav-inscription").style.display = connecte ? "none" : "";
   document.getElementById("nav-connexion").style.display = connecte ? "none" : "";
@@ -544,6 +552,7 @@ function mettreAJourNavigation(connecte) {
   document.getElementById("inscription").style.display = connecte ? "none" : "";
   document.getElementById("connexion").style.display = connecte ? "none" : "";
 }
+
 const formulaires = [
   {
     bloc: "formulaire-couple",
@@ -611,64 +620,61 @@ formulaires.forEach(function(config) {
 
     try {
 
-// 1️⃣ Création du compte avec email et mot de passe
-const authResponse = await fetch(
-  SUPABASE_URL + "/auth/v1/signup",
-  {
-    method: "POST",
-    headers: {
-      "apikey": SUPABASE_KEY,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      email: email,
-      password: motdepasse
-    })
-  }
-);
+      const authResponse = await fetch(
+        SUPABASE_URL + "/auth/v1/signup",
+        {
+          method: "POST",
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            email: email,
+            password: motdepasse
+          })
+        }
+      );
 
-const authData = await authResponse.json();
+      const authData = await authResponse.json();
 
-if (!authResponse.ok) {
-  throw new Error(authData.message || authData.error || "Erreur lors de la création du compte");
-}
+      if (!authResponse.ok) {
+        throw new Error(authData.message || authData.error || "Erreur lors de la création du compte");
+      }
 
-const userId = authData.user ? authData.user.id : authData.id;
+      const userId = authData.user ? authData.user.id : authData.id;
 
-// 2️⃣ Enregistrement du profil
-const response = await fetch(
-  SUPABASE_URL + "/rest/v1/Inscription",
-  {
-    method: "POST",
-    headers: {
-      "apikey": SUPABASE_KEY,
-      "Authorization": "Bearer " + authData.access_token,
-      "Content-Type": "application/json",
-      "Prefer": "return=minimal"
-    },
-    body: JSON.stringify({
-      "Pseudonyme": pseudo,
-      "Email": email,
-      "ville_departement": ville,
-      "Présentation": presentation,
-      "Profil": config.profil,
-      "user_id": userId
-    })
-  }
-);
+      const response = await fetch(
+        SUPABASE_URL + "/rest/v1/Inscription",
+        {
+          method: "POST",
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + authData.access_token,
+            "Content-Type": "application/json",
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify({
+            "Pseudonyme": pseudo,
+            "Email": email,
+            "ville_departement": ville,
+            "Présentation": presentation,
+            "Profil": config.profil,
+            "user_id": userId
+          })
+        }
+      );
 
-if (!response.ok) {
-  const erreur = await response.text();
-  throw new Error(erreur);
-}
-  
+      if (!response.ok) {
+        const erreur = await response.text();
+        throw new Error(erreur);
+      }
 
       alert("Inscription enregistrée avec succès !");
       formulaire.reset();
 
     } catch (error) {
-  console.error(error);
-  alert("Erreur lors de l'inscription : " + error.message);
+      console.error(error);
+      alert("Erreur lors de l'inscription : " + error.message);
     }
   });
 });
@@ -706,7 +712,6 @@ async function afficherProfil(accessToken, userEmail) {
 
   window.location.hash = "espace-membre";
 }
-
   // CONNEXION DES MEMBRES
 
 const formulaireConnexion = document.getElementById("formulaire-connexion");
@@ -744,6 +749,7 @@ formulaireConnexion.addEventListener("submit", async function(e) {
     localStorage.setItem("outdoor_refresh_token", data.refresh_token);
 
     await afficherProfil(data.access_token, data.user.email);
+    mettreAJourNavigation(true);
 
     formulaireConnexion.reset();
 
@@ -753,7 +759,7 @@ formulaireConnexion.addEventListener("submit", async function(e) {
 
     alert("Erreur de connexion : " + error.message);
   }
-
+  
 });
 
 // Reconnexion automatique si une session est déjà enregistrée
@@ -779,9 +785,8 @@ window.addEventListener("DOMContentLoaded", async function() {
       const user = await userResponse.json();
 
       await afficherProfil(token, user.email);
-    
-await afficherProfil(data.access_token, data.user.email);
-    mettreAJourNavigation(true);
+      mettreAJourNavigation(true);
+
     } catch (error) {
       console.error("Session invalide :", error);
       localStorage.removeItem("outdoor_access_token");
@@ -793,21 +798,6 @@ await afficherProfil(data.access_token, data.user.email);
   }
 });
 
-      if (!userResponse.ok) {
-        throw new Error("Session expirée");
-      }
-
-      const user = await userResponse.json();
-
-      await afficherProfil(token, user.email);
-
-    } catch (error) {
-      console.error("Session invalide :", error);
-      localStorage.removeItem("outdoor_access_token");
-      localStorage.removeItem("outdoor_refresh_token");
-    }
-  }
-});
 // Gestion des indices dynamiques
 const listeIndices = document.getElementById("liste-indices");
 const boutonAjouterIndice = document.getElementById("ajouter-indice");
@@ -951,7 +941,8 @@ formulaireAventure.addEventListener("submit", async function(e) {
   }
 
 });
-  // Variables pour suivre la progression dans une aventure
+
+// Variables pour suivre la progression dans une aventure
 let aventureEnCours = null;
 let indicesEnCours = [];
 let indiceActuelIndex = 0;
@@ -1077,8 +1068,7 @@ document.getElementById("bouton-valider-reponse").addEventListener("click", func
     document.getElementById("message-jeu").textContent = "Mauvaise réponse, réessayez.";
   }
 });
-
-// Prévenir le créateur que l'aventure a été résolue
+  // Prévenir le créateur que l'aventure a été résolue
 document.getElementById("bouton-prevenir-createur").addEventListener("click", async function() {
   const token = localStorage.getItem("outdoor_access_token");
 
@@ -1139,13 +1129,7 @@ document.getElementById("bouton-prevenir-createur").addEventListener("click", as
   }
 });
 
-// Recharge la liste à chaque fois qu'on arrive sur la page
-window.addEventListener("hashchange", function() {
-  if (window.location.hash === "#decouvrir-aventures") {
-    chargerListeAventures();
-  }
-});
-  // Charge et affiche les notifications du créateur connecté
+// Charge et affiche les notifications du créateur connecté
 async function chargerNotifications() {
   const token = localStorage.getItem("outdoor_access_token");
   if (!token) return;
@@ -1189,10 +1173,14 @@ async function chargerNotifications() {
 }
 
 window.addEventListener("hashchange", function() {
+  if (window.location.hash === "#decouvrir-aventures") {
+    chargerListeAventures();
+  }
   if (window.location.hash === "#mes-notifications") {
     chargerNotifications();
   }
 });
+
 async function deconnexion() {
   const token = localStorage.getItem("outdoor_access_token");
 
@@ -1215,7 +1203,7 @@ async function deconnexion() {
 
   localStorage.removeItem("outdoor_access_token");
   localStorage.removeItem("outdoor_refresh_token");
-mettreAJourNavigation(false);
+  mettreAJourNavigation(false);
   window.location.hash = "connexion";
   alert("Vous êtes déconnecté.");
 }
