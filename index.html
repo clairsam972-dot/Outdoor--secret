@@ -827,7 +827,10 @@ formulaires.forEach(function(config) {
 });
 
 // Récupère le profil et l'affiche dans la page
-async function afficherProfil(accessToken, userEmail) {
+const NOM_BUCKET_MEDIAS = "medias-profil";
+let idUtilisateurCourant = null;
+
+async function afficherProfil(accessToken, userEmail, userId) {
   const profilResponse = await fetch(
     SUPABASE_URL + "/rest/v1/Inscription?Email=eq." + encodeURIComponent(userEmail),
     {
@@ -856,7 +859,191 @@ async function afficherProfil(accessToken, userEmail) {
   document.getElementById("profil-type").textContent = profil.Profil || "";
   document.getElementById("profil-ville").textContent = profil.ville_departement || "";
   document.getElementById("profil-presentation").textContent = profil["Présentation"] || "";
+
+  idUtilisateurCourant = userId;
+  await chargerGalerie();
 }
+
+// Affiche la galerie privée du membre connecté
+async function chargerGalerie() {
+  const token = localStorage.getItem("outdoor_access_token");
+  const conteneur = document.getElementById("galerie-medias");
+
+  if (!token || !idUtilisateurCourant) return;
+
+  conteneur.innerHTML = '<p class="chargement">Chargement de votre galerie...</p>';
+
+  try {
+    const listeResponse = await fetch(
+      SUPABASE_URL + "/storage/v1/object/list/" + NOM_BUCKET_MEDIAS,
+      {
+        method: "POST",
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": "Bearer " + token,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          prefix: idUtilisateurCourant + "/",
+          limit: 100,
+          sortBy: { column: "created_at", order: "desc" }
+        })
+      }
+    );
+
+    if (!listeResponse.ok) {
+      throw new Error("Impossible de charger la galerie");
+    }
+
+    const fichiers = await listeResponse.json();
+
+    if (fichiers.length === 0) {
+      conteneur.innerHTML = "<p>Aucune photo ou vidéo pour le moment.</p>";
+      return;
+    }
+
+    conteneur.innerHTML = "";
+
+    for (const fichier of fichiers) {
+      const vignette = await creerVignetteMedia(fichier, token);
+      if (vignette) conteneur.appendChild(vignette);
+    }
+
+  } catch (error) {
+    console.error(error);
+    conteneur.innerHTML = "<p>Erreur lors du chargement de la galerie.</p>";
+  }
+}
+
+// Génère une URL signée temporaire et la vignette (image ou vidéo) associée
+async function creerVignetteMedia(fichier, token) {
+  const chemin = idUtilisateurCourant + "/" + fichier.name;
+  const estVideo = ((fichier.metadata && fichier.metadata.mimetype) || "").startsWith("video/");
+
+  const signResponse = await fetch(
+    SUPABASE_URL + "/storage/v1/object/sign/" + NOM_BUCKET_MEDIAS + "/" + chemin,
+    {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + token,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ expiresIn: 3600 })
+    }
+  );
+
+  if (!signResponse.ok) return null;
+
+  const { signedURL } = await signResponse.json();
+  const urlMedia = SUPABASE_URL + signedURL;
+
+  const vignette = document.createElement("div");
+  vignette.className = "media-galerie";
+  vignette.innerHTML =
+    (estVideo
+      ? '<video src="' + urlMedia + '" controls></video>'
+      : '<img src="' + urlMedia + '" alt="Média de la galerie">') +
+    '<button type="button" class="contour bouton-supprimer-media">Supprimer</button>';
+
+  vignette.querySelector(".bouton-supprimer-media").addEventListener("click", function() {
+    supprimerMedia(fichier.name);
+  });
+
+  return vignette;
+}
+
+// Envoie le fichier choisi vers le bucket privé du membre
+async function televerserMedia(file) {
+  const token = localStorage.getItem("outdoor_access_token");
+
+  if (!token || !idUtilisateurCourant) {
+    alert("Vous devez être connecté pour ajouter un média.");
+    return;
+  }
+
+  const TAILLE_MAX = 25 * 1024 * 1024;
+  if (file.size > TAILLE_MAX) {
+    alert("Le fichier est trop volumineux (25 Mo maximum).");
+    return;
+  }
+
+  const nomNettoye = file.name.replace(/[^a-zA-Z0-9.\-_]/g, "_");
+  const chemin = idUtilisateurCourant + "/" + Date.now() + "-" + nomNettoye;
+  const bouton = document.getElementById("bouton-ajouter-media");
+
+  await avecChargement(bouton, "Envoi en cours...", async function() {
+    try {
+      const response = await fetch(
+        SUPABASE_URL + "/storage/v1/object/" + NOM_BUCKET_MEDIAS + "/" + chemin,
+        {
+          method: "POST",
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + token,
+            "Content-Type": file.type || "application/octet-stream"
+          },
+          body: file
+        }
+      );
+
+      if (!response.ok) {
+        const erreur = await response.text();
+        throw new Error(erreur || "Échec de l'envoi");
+      }
+
+      await chargerGalerie();
+
+    } catch (error) {
+      console.error(error);
+      alert("Erreur lors de l'envoi du média : " + error.message);
+    }
+  });
+}
+
+// Supprime un média de la galerie privée
+async function supprimerMedia(nomFichier) {
+  const token = localStorage.getItem("outdoor_access_token");
+
+  if (!token || !idUtilisateurCourant) return;
+  if (!confirm("Supprimer ce média ?")) return;
+
+  const chemin = idUtilisateurCourant + "/" + nomFichier;
+
+  try {
+    const response = await fetch(
+      SUPABASE_URL + "/storage/v1/object/" + NOM_BUCKET_MEDIAS + "/" + chemin,
+      {
+        method: "DELETE",
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": "Bearer " + token
+        }
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Échec de la suppression");
+    }
+
+    await chargerGalerie();
+
+  } catch (error) {
+    console.error(error);
+    alert("Erreur lors de la suppression : " + error.message);
+  }
+}
+
+document.getElementById("bouton-ajouter-media").addEventListener("click", function() {
+  document.getElementById("input-media").click();
+});
+
+document.getElementById("input-media").addEventListener("change", function(e) {
+  const fichier = e.target.files[0];
+  if (fichier) televerserMedia(fichier);
+  e.target.value = "";
+});
+
   // CONNEXION DES MEMBRES
 
 const formulaireConnexion = document.getElementById("formulaire-connexion");
@@ -896,7 +1083,7 @@ formulaireConnexion.addEventListener("submit", async function(e) {
       localStorage.setItem("outdoor_refresh_token", data.refresh_token);
 
       mettreAJourNavigation(true);
-      await afficherProfil(data.access_token, data.user.email);
+      await afficherProfil(data.access_token, data.user.email, data.user.id);
       window.location.hash = "espace-membre";
 
       formulaireConnexion.reset();
@@ -933,7 +1120,7 @@ window.addEventListener("DOMContentLoaded", async function() {
       const user = await userResponse.json();
 
       mettreAJourNavigation(true);
-      await afficherProfil(token, user.email);
+      await afficherProfil(token, user.email, user.id);
       window.location.hash = "espace-membre";
 
     } catch (error) {
@@ -1359,6 +1546,8 @@ async function deconnexion() {
 
   localStorage.removeItem("outdoor_access_token");
   localStorage.removeItem("outdoor_refresh_token");
+  idUtilisateurCourant = null;
+  document.getElementById("galerie-medias").innerHTML = "";
   mettreAJourNavigation(false);
   window.location.hash = "connexion";
   alert("Vous êtes déconnecté.");
