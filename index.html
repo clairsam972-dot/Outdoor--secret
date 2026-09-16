@@ -476,6 +476,7 @@
   </div>
 
   <button class="primaire" onclick="deconnexion()">
+    <a class="primaire" href="#creer-aventure">Créer une aventure</a>
     Se déconnecter
   </button>
 </section>
@@ -728,7 +729,149 @@ window.addEventListener("DOMContentLoaded", async function() {
     }
   }
 });
+// Gestion des indices dynamiques
+const listeIndices = document.getElementById("liste-indices");
+const boutonAjouterIndice = document.getElementById("ajouter-indice");
 
+boutonAjouterIndice.addEventListener("click", function() {
+  const bloc = document.createElement("div");
+  bloc.className = "bloc-indice";
+  bloc.innerHTML =
+    '<label>Indice</label>' +
+    '<input type="text" class="champ-indice" required>' +
+    '<label>Réponse à deviner</label>' +
+    '<input type="text" class="champ-reponse" required>' +
+    '<button type="button" class="contour bouton-supprimer-indice">Supprimer cet indice</button>';
+
+  listeIndices.appendChild(bloc);
+
+  bloc.querySelector(".bouton-supprimer-indice").addEventListener("click", function() {
+    bloc.remove();
+  });
+});
+
+boutonAjouterIndice.click();
+
+// Création d'une aventure
+const formulaireAventure = document.getElementById("formulaire-aventure");
+
+formulaireAventure.addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const token = localStorage.getItem("outdoor_access_token");
+
+  if (!token) {
+    alert("Vous devez être connecté pour créer une aventure.");
+    return;
+  }
+
+  const titre = document.getElementById("titre-aventure").value;
+  const description = document.getElementById("description-aventure").value;
+  const blocsIndices = document.querySelectorAll("#liste-indices .bloc-indice");
+
+  if (blocsIndices.length === 0) {
+    alert("Ajoutez au moins un indice.");
+    return;
+  }
+
+  try {
+
+    const userResponse = await fetch(SUPABASE_URL + "/auth/v1/user", {
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + token
+      }
+    });
+
+    if (!userResponse.ok) {
+      throw new Error("Session expirée, reconnectez-vous.");
+    }
+
+    const user = await userResponse.json();
+
+    const profilResponse = await fetch(
+      SUPABASE_URL + "/rest/v1/Inscription?Email=eq." + encodeURIComponent(user.email),
+      {
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": "Bearer " + token
+        }
+      }
+    );
+
+    const profils = await profilResponse.json();
+    const pseudo = profils.length > 0 ? profils[0].Pseudonyme : user.email;
+
+    const aventureResponse = await fetch(
+      SUPABASE_URL + "/rest/v1/Aventures",
+      {
+        method: "POST",
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": "Bearer " + token,
+          "Content-Type": "application/json",
+          "Prefer": "return=representation"
+        },
+        body: JSON.stringify({
+          user_id: user.id,
+          createur_pseudo: pseudo,
+          titre: titre,
+          description: description
+        })
+      }
+    );
+
+    if (!aventureResponse.ok) {
+      const erreur = await aventureResponse.text();
+      throw new Error(erreur);
+    }
+
+    const aventureCreee = await aventureResponse.json();
+    const aventureId = aventureCreee[0].id;
+
+    const indicesAEnvoyer = [];
+
+    blocsIndices.forEach(function(bloc, index) {
+      indicesAEnvoyer.push({
+        aventure_id: aventureId,
+        ordre: index + 1,
+        indice: bloc.querySelector(".champ-indice").value,
+        reponse: bloc.querySelector(".champ-reponse").value.trim().toLowerCase()
+      });
+    });
+
+    const indicesResponse = await fetch(
+      SUPABASE_URL + "/rest/v1/Indices",
+      {
+        method: "POST",
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": "Bearer " + token,
+          "Content-Type": "application/json",
+          "Prefer": "return=minimal"
+        },
+        body: JSON.stringify(indicesAEnvoyer)
+      }
+    );
+
+    if (!indicesResponse.ok) {
+      const erreur = await indicesResponse.text();
+      throw new Error(erreur);
+    }
+
+    alert("Votre aventure a été publiée avec succès !");
+    formulaireAventure.reset();
+    listeIndices.innerHTML = "";
+    boutonAjouterIndice.click();
+
+    window.location.hash = "espace-membre";
+
+  } catch (error) {
+    console.error(error);
+    alert("Erreur lors de la création de l'aventure : " + error.message);
+  }
+
+});
 async function deconnexion() {
   const token = localStorage.getItem("outdoor_access_token");
 
