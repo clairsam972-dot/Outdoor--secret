@@ -169,6 +169,17 @@ footer {
   color: #ff70df;
 }
 
+/* Vue plein écran : n'affiche que la section active */
+body.plein-ecran .hero,
+body.plein-ecran footer,
+body.plein-ecran section:not(.vue-plein-ecran) {
+  display: none !important;
+}
+
+body.plein-ecran section.vue-plein-ecran {
+  min-height: 80vh;
+}
+
 @media (max-width: 700px) {
   .navigation {
     flex-direction: column;
