@@ -497,27 +497,34 @@
   <a class="contour" href="#decouvrir-aventures">Retour à la liste</a>
 </section>
 
-<section id="mes-notifications" class="section">
-  <p class="sourcil">OUTDOOR SECRET</p>
-  <h2>Mes notifications</h2>
-
-  <div id="liste-notifications"></div>
-
-  <a class="contour" href="#espace-membre">Retour à mon profil</a>
-</section>
-
 <section id="espace-membre" class="section">
-  <p class="sourcil">OUTDOOR SECRET</p>
-  <h2>Mon profil</h2>
+
+  <div class="profil-header">
+    <div class="profil-photo-principale">
+      <img id="photo-principale" src="" alt="Photo de profil" style="display:none;">
+      <div id="placeholder-photo">📷</div>
+    </div>
+    <div class="profil-infos-principales">
+      <h2 id="profil-pseudo-titre"></h2>
+      <p><strong>Profil :</strong> <span id="profil-type"></span></p>
+      <p><strong>Ville :</strong> <span id="profil-ville"></span></p>
+    </div>
+  </div>
 
   <div class="carte">
-    <p><strong>Pseudo :</strong> <span id="profil-pseudo"></span></p>
     <p><strong>Email :</strong> <span id="profil-email"></span></p>
-    <p><strong>Profil :</strong> <span id="profil-type"></span></p>
-    <p><strong>Ville :</strong> <span id="profil-ville"></span></p>
-
     <p><strong>Présentation :</strong></p>
     <p id="profil-presentation"></p>
+  </div>
+
+  <div class="section-galerie">
+    <h3>Ma galerie (privée)</h3>
+    <p>Ajoutez vos photos et vidéos. Elles ne sont visibles que par vous.</p>
+
+    <input type="file" id="input-media" accept="image/*,video/*" style="display:none;">
+    <button type="button" class="primaire" id="bouton-ajouter-media">+ Ajouter une photo/vidéo</button>
+
+    <div id="galerie-medias"></div>
   </div>
 
   <a class="primaire" href="#creer-aventure">Créer une aventure</a>
@@ -528,9 +535,7 @@
     Se déconnecter
   </button>
 </section>
-
 </main>
-
 <footer>
   <p>© 2026 Secrets du plein air</p>
   <p>Adultes uniquement • Respect • Sécurité</p>
