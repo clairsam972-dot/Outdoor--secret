@@ -156,6 +156,19 @@ footer {
   border-top: 1px solid #33203b;
 }
 
+.liens-footer {
+  margin-top: 16px;
+}
+
+.liens-footer a {
+  color: #9d91a3;
+  text-decoration: underline;
+}
+
+.liens-footer a:hover {
+  color: #ff70df;
+}
+
 @media (max-width: 700px) {
   .navigation {
     flex-direction: column;

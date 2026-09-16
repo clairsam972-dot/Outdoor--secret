@@ -16,8 +16,6 @@
     <a href="#experiences">Rendez-vous</a>
     <a href="#chasse">La Chasse</a>
     <a href="#creer">Créateur</a>
-    <a href="#securite">Sécurité</a>
-    <button class="contour" onclick="location.href='#rapport'">Rapport</button>
 
     <a href="#inscription" class="primaire" id="nav-inscription">Inscription +18</a>
     <a href="#connexion" class="contour" id="nav-connexion">Se connecter</a>
@@ -159,49 +157,6 @@
   </div>
 </section>
 
-<section id="securite" class="section securite">
-  <p class="sourcil">SÉCURITÉ</p>
-  <h2>La sécurité avant tout</h2>
-  <p>
-    Respect, consentement, discrétion et sécurité sont au cœur
-    de chaque expérience.
-  </p>
-
-  <div class="alerte">
-    <strong>Réservé aux adultes.</strong>
-    <br>
-    Respectez toujours les lois locales, les lieux privés et
-    les règles de sécurité.
-  </div>
-</section>
-<section id="rapport" class="section">
-  <p class="sourcil">RAPPORT</p>
-  <h2>Signaler un problème</h2>
-
-  <p>
-    Votre sécurité et votre tranquillité sont importantes.
-    Utilisez ce formulaire pour signaler un comportement,
-    une expérience ou un contenu qui ne respecte pas les règles.
-  </p>
-
-  <form>
-    <label for="motif">Motif du rapport</label>
-    <select id="motif" name="motif">
-      <option value="">Choisir un motif</option>
-      <option>Comportement inapproprié</option>
-      <option>Non-respect des règles</option>
-      <option>Problème de sécurité</option>
-      <option>Contenu à signaler</option>
-      <option>Autre</option>
-    </select>
-
-    <label for="message">Décrivez le problème</label>
-    <textarea id="message" name="message" rows="5"
-      placeholder="Expliquez ce qui s'est passé..."></textarea>
-
-    <button type="submit" class="primaire">Envoyer le rapport</button>
-  </form>
-</section>
 <section id="aventure-nature" class="section">
   <p class="sourcil">ÉVASION NATURE</p>
   <h2>Une aventure au cœur de la nature</h2>
@@ -544,10 +499,57 @@
 
   <a class="contour" href="#espace-membre">Retour à mon profil</a>
 </section>
+
+<section id="securite" class="section securite">
+  <p class="sourcil">SÉCURITÉ</p>
+  <h2>La sécurité avant tout</h2>
+  <p>
+    Respect, consentement, discrétion et sécurité sont au cœur
+    de chaque expérience.
+  </p>
+
+  <div class="alerte">
+    <strong>Réservé aux adultes.</strong>
+    <br>
+    Respectez toujours les lois locales, les lieux privés et
+    les règles de sécurité.
+  </div>
+</section>
+<section id="rapport" class="section">
+  <p class="sourcil">RAPPORT</p>
+  <h2>Signaler un problème</h2>
+
+  <p>
+    Votre sécurité et votre tranquillité sont importantes.
+    Utilisez ce formulaire pour signaler un comportement,
+    une expérience ou un contenu qui ne respecte pas les règles.
+  </p>
+
+  <form>
+    <label for="motif">Motif du rapport</label>
+    <select id="motif" name="motif">
+      <option value="">Choisir un motif</option>
+      <option>Comportement inapproprié</option>
+      <option>Non-respect des règles</option>
+      <option>Problème de sécurité</option>
+      <option>Contenu à signaler</option>
+      <option>Autre</option>
+    </select>
+
+    <label for="message">Décrivez le problème</label>
+    <textarea id="message" name="message" rows="5"
+      placeholder="Expliquez ce qui s'est passé..."></textarea>
+
+    <button type="submit" class="primaire">Envoyer le rapport</button>
+  </form>
+</section>
 </main>
 <footer>
   <p>© 2026 Secrets du plein air</p>
   <p>Adultes uniquement • Respect • Sécurité</p>
+  <p class="liens-footer">
+    <a href="#securite">Sécurité</a> · <a href="#rapport">Signaler un problème</a>
+  </p>
 </footer>
 
 <script>
