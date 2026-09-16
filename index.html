@@ -551,6 +551,12 @@ function mettreAJourNavigation(connecte) {
 
   document.getElementById("inscription").style.display = connecte ? "none" : "";
   document.getElementById("connexion").style.display = connecte ? "none" : "";
+
+  document.getElementById("espace-membre").style.display = connecte ? "" : "none";
+  document.getElementById("creer-aventure").style.display = connecte ? "" : "none";
+  document.getElementById("decouvrir-aventures").style.display = connecte ? "" : "none";
+  document.getElementById("jouer-aventure").style.display = connecte ? "" : "none";
+  document.getElementById("mes-notifications").style.display = connecte ? "" : "none";
 }
 
 const formulaires = [
