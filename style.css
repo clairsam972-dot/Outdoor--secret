@@ -395,6 +395,10 @@ section.compacte > p {
   }
 }
 
+.tarifs {
+  margin-top: 30px;
+}
+
 /* Photo de profil principale */
 .profil-photo-principale {
   width: 110px;
