@@ -328,3 +328,69 @@ section[id] {
   color: #b9a9c2;
   font-style: italic;
 }
+
+/* Sections sécurité / rapport : présentation plus compacte */
+section.compacte {
+  padding: 50px 6%;
+}
+
+section.compacte h2 {
+  font-size: 26px;
+}
+
+section.compacte > p {
+  font-size: 15px;
+  max-width: 640px;
+}
+
+.securite .alerte {
+  margin-top: 16px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: rgba(255, 79, 216, 0.08);
+  border: 1px solid #42254d;
+  font-size: 14px;
+}
+
+#rapport form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 480px;
+  margin-top: 16px;
+}
+
+#rapport form label {
+  font-size: 14px;
+}
+
+#rapport form select,
+#rapport form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #42254d;
+  background: #150e1a;
+  color: #f5f2f7;
+  font-family: inherit;
+}
+
+#rapport form textarea {
+  min-height: 90px;
+}
+
+#rapport form button {
+  margin-top: 4px;
+  align-self: flex-start;
+}
+
+@media (max-width: 700px) {
+  section.compacte {
+    padding: 36px 5%;
+  }
+
+  #rapport form button {
+    width: 100%;
+  }
+}
