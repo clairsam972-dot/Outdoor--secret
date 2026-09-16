@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Secrets du plein air</title>
-  <link rel="stylesheet" href="style.css?v=13">
+  <link rel="stylesheet" href="style.css?v=14">
 </head>
 
 <body>
@@ -16,6 +16,7 @@
     <a href="#experiences">Rendez-vous</a>
     <a href="#chasse">La Chasse</a>
     <a href="#creer">Créateur</a>
+    <a href="#histoires">Histoires</a>
 
     <a href="#inscription" class="primaire" id="nav-inscription">Inscription +18</a>
     <a href="#connexion" class="contour" id="nav-connexion">Se connecter</a>
@@ -150,6 +151,7 @@
         <span>📍 Île-de-France</span>
         <span>👥 2 à 6 personnes</span>
         <span>⏱️ 2 à 4 h</span>
+        <span>💶 5€ / participant</span>
       </div>
       <a class="primaire" href="#aventure-nature">Voir l'aventure</a>
     </article>
@@ -165,6 +167,7 @@
         <span>📍 Île-de-France</span>
         <span>👥 2 à 8 personnes</span>
         <span>⏱️ Une soirée</span>
+        <span>💶 5€ / participant</span>
       </div>
       <a class="primaire" href="#aventure-nuit">Voir l'aventure</a>
     </article>
@@ -180,6 +183,7 @@
         <span>📍 Lieu secret</span>
         <span>👥 2 à 10 personnes</span>
         <span>⏱️ 3 à 5 h</span>
+        <span>💶 5€ / participant</span>
       </div>
       <a class="primaire" href="#aventure-defi">Voir l'aventure</a>
     </article>
@@ -192,12 +196,21 @@
   <p>
     Imaginez votre parcours, partagez vos idées et proposez
     de nouvelles expériences à la communauté.
+    <strong>Créer une aventure est et restera toujours gratuit.</strong>
   </p>
 
   <div class="actes">
-    <button class="primaire" onclick="allerCreerAventure()">Créer une aventure</button>
+    <button class="primaire" onclick="allerCreerAventure()">Créer une aventure — Gratuit</button>
     <a class="contour" href="#chasse">En savoir plus</a>
   </div>
+
+  <article class="tarifs">
+    <h3>Comment ça marche côté tarifs ?</h3>
+    <p>✅ Inscription gratuite pour tout le monde.</p>
+    <p>✅ Créer et proposer une aventure : gratuit.</p>
+    <p>💶 Participer à une aventure : 5€ par personne.</p>
+    <p>🃏 Bloqué sur une énigme ? Un joker débloque la réponse pour 10€.</p>
+  </article>
 </section>
 
 <section id="aventure-nature" class="section">
@@ -214,10 +227,11 @@
     <span>📍 Île-de-France</span>
     <span>👥 2 à 6 personnes</span>
     <span>⏱️ 2 à 4 h</span>
+    <span>💶 5€ / participant</span>
   </div>
 
   <div class="actes">
-    <a class="primaire" href="#inscription">Réserver</a>
+    <a class="primaire" href="#inscription">Réserver — 5€</a>
     <a class="contour" href="#chasse">Retour</a>
   </div>
 </section>
@@ -236,10 +250,11 @@
     <span>📍 Île-de-France</span>
     <span>👥 2 à 8 personnes</span>
     <span>⏱️ Une soirée</span>
+    <span>💶 5€ / participant</span>
   </div>
 
   <div class="actes">
-    <a class="primaire" href="#inscription">Réserver</a>
+    <a class="primaire" href="#inscription">Réserver — 5€</a>
     <a class="contour" href="#chasse">Retour</a>
   </div>
 </section>
@@ -258,11 +273,73 @@
     <span>📍 Lieu secret</span>
     <span>👥 2 à 10 personnes</span>
     <span>⏱️ 3 à 5 h</span>
+    <span>💶 5€ / participant</span>
   </div>
 
   <div class="actes">
-    <a class="primaire" href="#inscription">Réserver</a>
+    <a class="primaire" href="#inscription">Réserver — 5€</a>
     <a class="contour" href="#chasse">Retour</a>
+  </div>
+</section>
+
+<section id="histoires" class="section">
+  <p class="sourcil">HISTOIRES</p>
+  <h2>Ils ont vécu l'aventure</h2>
+  <p>
+    Quelques souvenirs partagés par des membres qui ont
+    batifolé en plein air grâce à De Plein Air.
+  </p>
+
+  <div class="cartes">
+
+    <article class="carte">
+      <div class="icone">🌲</div>
+      <p>
+        « On a réservé Évasion nature sans trop savoir à quoi
+        s'attendre. Le lieu était magique, un vrai moment
+        complice, loin de tout. »
+      </p>
+      <h3>Léa &amp; Max</h3>
+      <p><em>Couple · Évasion nature</em></p>
+    </article>
+
+    <article class="carte">
+      <div class="icone">🔥</div>
+      <p>
+        « Nuit sauvage restera un souvenir marquant. L'ambiance,
+        le mystère... on ne voit plus les sorties en plein air
+        pareil après ça. »
+      </p>
+      <h3>Yann</h3>
+      <p><em>34 ans · Nuit sauvage</em></p>
+    </article>
+
+    <article class="carte">
+      <div class="icone">🗺️</div>
+      <p>
+        « Le Défi mystère nous a fait rire, chercher, et
+        finalement nous rapprocher. Parfait pour sortir de la
+        routine. »
+      </p>
+      <h3>Sofia &amp; Inès</h3>
+      <p><em>Couple · Défi mystère</em></p>
+    </article>
+
+    <article class="carte">
+      <div class="icone">✨</div>
+      <p>
+        « J'étais sceptique au début, mais l'équipe est
+        rassurante et sérieuse sur la sécurité. J'y retourne dès
+        que possible. »
+      </p>
+      <h3>Karim</h3>
+      <p><em>Célibataire · Évasion nature</em></p>
+    </article>
+
+  </div>
+
+  <div class="actes">
+    <a class="primaire" href="#chasse">Vivre ma propre aventure</a>
   </div>
 </section>
 
@@ -506,6 +583,7 @@
 
     <input type="text" id="reponse-utilisateur" placeholder="Votre réponse...">
     <button type="button" class="primaire" id="bouton-valider-reponse">Valider</button>
+    <button type="button" class="contour" id="bouton-joker">🃏 Utiliser un joker — 10€</button>
     <p id="message-jeu"></p>
   </div>
 
@@ -1533,6 +1611,13 @@ document.getElementById("bouton-valider-reponse").addEventListener("click", func
     document.getElementById("message-jeu").textContent = "Mauvaise réponse, réessayez.";
   }
 });
+
+// Le paiement en ligne (Stripe) n'est pas encore branché : le joker
+// ne débloque rien pour l'instant, il informe juste le joueur.
+document.getElementById("bouton-joker").addEventListener("click", function() {
+  alert("Le paiement en ligne pour débloquer un joker arrive bientôt !");
+});
+
   // Prévenir le créateur que l'aventure a été résolue
 document.getElementById("bouton-prevenir-createur").addEventListener("click", async function() {
   const token = localStorage.getItem("outdoor_access_token");
