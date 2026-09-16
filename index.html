@@ -37,6 +37,7 @@
       <div id="placeholder-photo">📷</div>
       <input type="file" id="input-photo-profil" accept="image/*" style="display:none;">
     </div>
+    <button type="button" class="contour bouton-camera-profil" id="bouton-prendre-photo-profil">📷 Prendre une photo</button>
     <div class="profil-infos-principales">
       <h2 id="profil-pseudo-titre"></h2>
       <p><strong>Profil :</strong> <span id="profil-type"></span></p>
@@ -56,6 +57,7 @@
 
     <input type="file" id="input-media" accept="image/*,video/*" style="display:none;">
     <button type="button" class="primaire" id="bouton-ajouter-media">+ Ajouter une photo/vidéo</button>
+    <button type="button" class="contour" id="bouton-prendre-photo">📷 Prendre une photo</button>
 
     <div id="galerie-medias"></div>
   </div>
@@ -953,11 +955,21 @@ async function televerserPhotoProfil(file) {
 }
 
 document.getElementById("photo-principale").addEventListener("click", function() {
-  document.getElementById("input-photo-profil").click();
+  const input = document.getElementById("input-photo-profil");
+  input.removeAttribute("capture");
+  input.click();
 });
 
 document.getElementById("placeholder-photo").addEventListener("click", function() {
-  document.getElementById("input-photo-profil").click();
+  const input = document.getElementById("input-photo-profil");
+  input.removeAttribute("capture");
+  input.click();
+});
+
+document.getElementById("bouton-prendre-photo-profil").addEventListener("click", function() {
+  const input = document.getElementById("input-photo-profil");
+  input.setAttribute("capture", "user");
+  input.click();
 });
 
 document.getElementById("input-photo-profil").addEventListener("change", function(e) {
@@ -1140,7 +1152,15 @@ async function supprimerMedia(nomFichier) {
 }
 
 document.getElementById("bouton-ajouter-media").addEventListener("click", function() {
-  document.getElementById("input-media").click();
+  const input = document.getElementById("input-media");
+  input.removeAttribute("capture");
+  input.click();
+});
+
+document.getElementById("bouton-prendre-photo").addEventListener("click", function() {
+  const input = document.getElementById("input-media");
+  input.setAttribute("capture", "environment");
+  input.click();
 });
 
 document.getElementById("input-media").addEventListener("change", function(e) {
