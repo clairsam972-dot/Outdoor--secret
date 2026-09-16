@@ -47,10 +47,23 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { aventure_id, indice_id } = await req.json();
+    const { aventure_id, indice_id, return_url } = await req.json();
 
-    if (!aventure_id || !indice_id) {
+    if (!aventure_id || !indice_id || !return_url) {
       return new Response(JSON.stringify({ error: "Paramètres manquants" }), {
+        status: 400,
+        headers: { ...enTetesCors, "Content-Type": "application/json" },
+      });
+    }
+
+    // Le site peut être hébergé sous un sous-chemin (ex: GitHub Pages,
+    // https://xxx.github.io/Outdoor--secret/), donc on se base sur l'URL
+    // de retour envoyée par le site plutôt que sur l'origine seule. On
+    // vérifie qu'elle pointe bien vers le même site que celui qui appelle
+    // la fonction, pour éviter une redirection vers un domaine tiers.
+    const origin = req.headers.get("origin") || "";
+    if (!return_url.startsWith(origin)) {
+      return new Response(JSON.stringify({ error: "URL de retour invalide" }), {
         status: 400,
         headers: { ...enTetesCors, "Content-Type": "application/json" },
       });
@@ -72,8 +85,6 @@ Deno.serve(async (req) => {
       });
     }
 
-    const origin = req.headers.get("origin") || Deno.env.get("SITE_URL") || "";
-
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
@@ -93,12 +104,12 @@ Deno.serve(async (req) => {
         indice_id: String(indice_id),
       },
       success_url:
-        origin +
-        "/?joker_session_id={CHECKOUT_SESSION_ID}&aventure_id=" +
+        return_url +
+        "?joker_session_id={CHECKOUT_SESSION_ID}&aventure_id=" +
         aventure_id +
         "&indice_id=" +
         indice_id,
-      cancel_url: origin + "/#jouer-aventure",
+      cancel_url: return_url + "#jouer-aventure",
     });
 
     return new Response(JSON.stringify({ url: session.url }), {
