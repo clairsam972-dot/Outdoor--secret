@@ -6,6 +6,16 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    transition: none;
+  }
+}
+
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -179,6 +189,13 @@ button:active {
   transform: translateY(0);
 }
 
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 .primaire {
   box-shadow: 0 5px 20px rgba(255, 60, 172, 0.25);
 }
@@ -270,4 +287,20 @@ section[id] {
 #inscription form button {
   width: 100%;
   margin-top: 10px;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.chargement {
+  color: #b9a9c2;
+  font-style: italic;
 }
