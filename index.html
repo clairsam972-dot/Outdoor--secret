@@ -715,7 +715,7 @@ async function afficherProfil(accessToken, userEmail) {
 
   const profil = profils[0];
 
-  document.getElementById("profil-pseudo").textContent = profil.Pseudonyme || "";
+  document.getElementById("profil-pseudo-titre").textContent = profil.Pseudonyme || "";
   document.getElementById("profil-email").textContent = profil.Email || userEmail;
   document.getElementById("profil-type").textContent = profil.Profil || "";
   document.getElementById("profil-ville").textContent = profil.ville_departement || "";
