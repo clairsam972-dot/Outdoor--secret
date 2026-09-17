@@ -1858,6 +1858,7 @@ async function gererRetourJoker() {
 
     indiceActuelIndex = index;
     afficherIndiceActuel();
+    document.getElementById("zone-indice").scrollIntoView({ behavior: "instant", block: "start" });
 
     let paye = false;
     for (let essai = 0; essai < 8 && !paye; essai++) {
