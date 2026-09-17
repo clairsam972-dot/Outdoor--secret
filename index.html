@@ -1818,13 +1818,9 @@ async function gererRetourJoker() {
   const aventureId = params.get("aventure_id");
   const indiceId = params.get("indice_id");
 
-  console.log("[joker] params:", { sessionId, aventureId, indiceId });
-
-  if (!sessionId || !aventureId || !indiceId) {
-    window.retourJokerEnCours = true;
-    console.log("[joker] params manquants, arrêt.");
-    return;
-  }
+  indiceActuelIndex = index;
+    afficherIndiceActuel();
+    document.getElementById("zone-indice").scrollIntoView({ behavior: "instant", block: "start" });
 
   window.history.replaceState(null, "", window.location.pathname + "#jouer-aventure");
 
