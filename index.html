@@ -1816,12 +1816,17 @@ async function gererRetourJoker() {
   const aventureId = params.get("aventure_id");
   const indiceId = params.get("indice_id");
 
-  if (!sessionId || !aventureId || !indiceId) return;
+  console.log("[joker] params:", { sessionId, aventureId, indiceId });
 
-  // Nettoie l'URL pour ne pas re-déclencher la vérification au rechargement
+  if (!sessionId || !aventureId || !indiceId) {
+    console.log("[joker] params manquants, arrêt.");
+    return;
+  }
+
   window.history.replaceState(null, "", window.location.pathname + "#jouer-aventure");
 
   const token = localStorage.getItem("outdoor_access_token");
+  console.log("[joker] token présent ?", !!token);
   if (!token) return;
 
   try {
@@ -1835,6 +1840,7 @@ async function gererRetourJoker() {
       }
     );
     const aventures = await reponseAventures.json();
+    console.log("[joker] aventures trouvées:", aventures);
 
     if (aventures.length === 0) return;
 
@@ -1843,13 +1849,13 @@ async function gererRetourJoker() {
     const index = indicesEnCours.findIndex(function(indice) {
       return String(indice.id) === String(indiceId);
     });
+    console.log("[joker] index de l'indice trouvé:", index, "indicesEnCours:", indicesEnCours);
 
     if (index === -1) return;
 
     indiceActuelIndex = index;
     afficherIndiceActuel();
 
-    // Le webhook Stripe peut mettre quelques secondes à confirmer le paiement
     let paye = false;
     for (let essai = 0; essai < 8 && !paye; essai++) {
       const reponseJoker = await fetch(
@@ -1862,6 +1868,7 @@ async function gererRetourJoker() {
         }
       );
       const jokers = await reponseJoker.json();
+      console.log("[joker] essai", essai, "résultat:", jokers);
       paye = jokers.length > 0;
 
       if (!paye) {
@@ -1869,18 +1876,22 @@ async function gererRetourJoker() {
       }
     }
 
+    console.log("[joker] paye:", paye, "indiceActuelIndex:", indiceActuelIndex);
+
     if (paye) {
       const reponse = indicesEnCours[indiceActuelIndex].reponse;
       document.getElementById("reponse-utilisateur").value = reponse;
       document.getElementById("message-jeu").textContent = "Joker activé : réponse « " + reponse + " ».";
+      console.log("[joker] réponse affichée:", reponse);
     } else {
       document.getElementById("message-jeu").textContent = "Paiement en cours de confirmation, réessayez dans un instant.";
     }
 
   } catch (error) {
-    console.error(error);
+    console.error("[joker] erreur:", error);
   }
 }
+
 
 gererRetourJoker();
 </script>
