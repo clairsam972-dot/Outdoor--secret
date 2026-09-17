@@ -1324,7 +1324,9 @@ window.addEventListener("DOMContentLoaded", async function() {
 
       mettreAJourNavigation(true);
       await afficherProfil(token, user.email, user.id);
-      window.location.hash = "espace-membre";
+      if (!window.retourJokerEnCours) {
+        window.location.hash = "espace-membre";
+      }
 
     } catch (error) {
       console.error("Session invalide :", error);
@@ -1819,6 +1821,7 @@ async function gererRetourJoker() {
   console.log("[joker] params:", { sessionId, aventureId, indiceId });
 
   if (!sessionId || !aventureId || !indiceId) {
+    window.retourJokerEnCours = true;
     console.log("[joker] params manquants, arrêt.");
     return;
   }
