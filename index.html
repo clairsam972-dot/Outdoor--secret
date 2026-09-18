@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>En Plein Air</title>
-  <link rel="stylesheet" href="style.css?v=14">
+  <link rel="stylesheet" href="style.css?v=15">
 </head>
 
 <body>
@@ -23,6 +23,7 @@
 
     <a href="#espace-membre" class="contour" id="nav-profil" style="display:none;">Mon profil</a>
     <a href="#decouvrir-aventures" class="primaire" id="nav-decouvrir" style="display:none;">Découvrir les aventures</a>
+    <a class="contour" id="nav-annuaire" style="display:none;" href="#annuaire-membres">Découvrir les membres</a>
     <a href="#creer-aventure" class="contour" id="nav-creer-aventure" style="display:none;">Créer une aventure</a>
     <button class="contour" id="nav-deconnexion" style="display:none;" onclick="deconnexion()">Se déconnecter</button>
   </nav>
@@ -64,6 +65,7 @@
   </div>
 
   <a class="primaire" href="#decouvrir-aventures">Découvrir les aventures</a>
+  <a class="primaire" href="#annuaire-membres">Découvrir les membres</a>
   <a class="primaire" href="#creer-aventure">Créer une aventure</a>
   <a class="primaire" href="#mes-notifications">Mes notifications</a>
 
@@ -405,29 +407,31 @@
     <textarea id="presentation-couple" name="presentation-couple"
       placeholder="Présentez votre couple en quelques mots..."></textarea>
 
+    <label for="motdepasse-couple">Mot de passe</label>
+    <input type="password" id="motdepasse-couple" required>
+
+    <label>Vos envies (plusieurs choix possibles)</label>
+    <div class="choix-envies">
+      <label><input type="checkbox" name="envie" value="randonnee"> 🥾 Randonnée</label>
+      <label><input type="checkbox" name="envie" value="camping"> 🏕️ Camping</label>
+      <label><input type="checkbox" name="envie" value="escalade"> 🧗 Escalade</label>
+      <label><input type="checkbox" name="envie" value="kayak"> 🛶 Kayak / eau</label>
+      <label><input type="checkbox" name="envie" value="nuit-etoilee"> 🌌 Nuit à la belle étoile</label>
+      <label><input type="checkbox" name="envie" value="pique-nique"> 🧺 Pique-nique nature</label>
+      <label><input type="checkbox" name="envie" value="aventure-coquine"> 🔥 Aventure coquine en extérieur</label>
+    </div>
+
+    <label for="recherche-couple">Ce que vous recherchez</label>
+    <select id="recherche-couple" name="recherche">
+      <option value="">-- Sélectionnez --</option>
+      <option value="partenaire-aventure">Un(e) partenaire d'aventure</option>
+      <option value="groupe-decouverte">Un groupe pour découvrir</option>
+      <option value="rencontre-serieuse">Une rencontre plus sérieuse</option>
+      <option value="plan-simple">Un plan simple, sans prise de tête</option>
+    </select>
+
     <label>
       <input type="checkbox" required>
-      <label for="motdepasse-couple">Mot de passe</label>
-<input type="password" id="motdepasse-couple" required>
-      <label>Vos envies (plusieurs choix possibles)</label>
-<div class="choix-envies">
-  <label><input type="checkbox" name="envie" value="randonnee"> 🥾 Randonnée</label>
-  <label><input type="checkbox" name="envie" value="camping"> 🏕️ Camping</label>
-  <label><input type="checkbox" name="envie" value="escalade"> 🧗 Escalade</label>
-  <label><input type="checkbox" name="envie" value="kayak"> 🛶 Kayak / eau</label>
-  <label><input type="checkbox" name="envie" value="nuit-etoilee"> 🌌 Nuit à la belle étoile</label>
-  <label><input type="checkbox" name="envie" value="pique-nique"> 🧺 Pique-nique nature</label>
-  <label><input type="checkbox" name="envie" value="aventure-coquine"> 🔥 Aventure coquine en extérieur</label>
-</div>
-
-<label for="recherche-couple">Ce que vous recherchez</label>
-<select id="recherche-couple" name="recherche">
-  <option value="">-- Sélectionnez --</option>
-  <option value="partenaire-aventure">Un(e) partenaire d'aventure</option>
-  <option value="groupe-decouverte">Un groupe pour découvrir</option>
-  <option value="rencontre-serieuse">Une rencontre plus sérieuse</option>
-  <option value="plan-simple">Un plan simple, sans prise de tête</option>
-</select>
       Nous confirmons être majeurs.
     </label>
 
@@ -462,29 +466,31 @@
       required
     ></textarea>
 
+    <label for="motdepasse-homme">Mot de passe</label>
+    <input type="password" id="motdepasse-homme" required>
+
+    <label>Vos envies (plusieurs choix possibles)</label>
+    <div class="choix-envies">
+      <label><input type="checkbox" name="envie" value="randonnee"> 🥾 Randonnée</label>
+      <label><input type="checkbox" name="envie" value="camping"> 🏕️ Camping</label>
+      <label><input type="checkbox" name="envie" value="escalade"> 🧗 Escalade</label>
+      <label><input type="checkbox" name="envie" value="kayak"> 🛶 Kayak / eau</label>
+      <label><input type="checkbox" name="envie" value="nuit-etoilee"> 🌌 Nuit à la belle étoile</label>
+      <label><input type="checkbox" name="envie" value="pique-nique"> 🧺 Pique-nique nature</label>
+      <label><input type="checkbox" name="envie" value="aventure-coquine"> 🔥 Aventure coquine en extérieur</label>
+    </div>
+
+    <label for="recherche-homme">Ce que vous recherchez</label>
+    <select id="recherche-homme" name="recherche">
+      <option value="">-- Sélectionnez --</option>
+      <option value="partenaire-aventure">Un(e) partenaire d'aventure</option>
+      <option value="groupe-decouverte">Un groupe pour découvrir</option>
+      <option value="rencontre-serieuse">Une rencontre plus sérieuse</option>
+      <option value="plan-simple">Un plan simple, sans prise de tête</option>
+    </select>
+
     <label>
       <input type="checkbox" required>
-      <label for="motdepasse-homme">Mot de passe</label>
-<input type="password" id="motdepasse-homme" required>
-      <label>Vos envies (plusieurs choix possibles)</label>
-<div class="choix-envies">
-  <label><input type="checkbox" name="envie" value="randonnee"> 🥾 Randonnée</label>
-  <label><input type="checkbox" name="envie" value="camping"> 🏕️ Camping</label>
-  <label><input type="checkbox" name="envie" value="escalade"> 🧗 Escalade</label>
-  <label><input type="checkbox" name="envie" value="kayak"> 🛶 Kayak / eau</label>
-  <label><input type="checkbox" name="envie" value="nuit-etoilee"> 🌌 Nuit à la belle étoile</label>
-  <label><input type="checkbox" name="envie" value="pique-nique"> 🧺 Pique-nique nature</label>
-  <label><input type="checkbox" name="envie" value="aventure-coquine"> 🔥 Aventure coquine en extérieur</label>
-</div>
-
-<label for="recherche-homme">Ce que vous recherchez</label>
-<select id="recherche-homme" name="recherche">
-  <option value="">-- Sélectionnez --</option>
-  <option value="partenaire-aventure">Un(e) partenaire d'aventure</option>
-  <option value="groupe-decouverte">Un groupe pour découvrir</option>
-  <option value="rencontre-serieuse">Une rencontre plus sérieuse</option>
-  <option value="plan-simple">Un plan simple, sans prise de tête</option>
-</select>
       Je confirme être majeur.
     </label>
 
@@ -522,29 +528,31 @@
       required
     ></textarea>
 
+    <label for="motdepasse-femme">Mot de passe</label>
+    <input type="password" id="motdepasse-femme" required>
+
+    <label>Vos envies (plusieurs choix possibles)</label>
+    <div class="choix-envies">
+      <label><input type="checkbox" name="envie" value="randonnee"> 🥾 Randonnée</label>
+      <label><input type="checkbox" name="envie" value="camping"> 🏕️ Camping</label>
+      <label><input type="checkbox" name="envie" value="escalade"> 🧗 Escalade</label>
+      <label><input type="checkbox" name="envie" value="kayak"> 🛶 Kayak / eau</label>
+      <label><input type="checkbox" name="envie" value="nuit-etoilee"> 🌌 Nuit à la belle étoile</label>
+      <label><input type="checkbox" name="envie" value="pique-nique"> 🧺 Pique-nique nature</label>
+      <label><input type="checkbox" name="envie" value="aventure-coquine"> 🔥 Aventure coquine en extérieur</label>
+    </div>
+
+    <label for="recherche-femme">Ce que vous recherchez</label>
+    <select id="recherche-femme" name="recherche">
+      <option value="">-- Sélectionnez --</option>
+      <option value="partenaire-aventure">Un(e) partenaire d'aventure</option>
+      <option value="groupe-decouverte">Un groupe pour découvrir</option>
+      <option value="rencontre-serieuse">Une rencontre plus sérieuse</option>
+      <option value="plan-simple">Un plan simple, sans prise de tête</option>
+    </select>
+
     <label>
       <input type="checkbox" required>
-      <label for="motdepasse-femme">Mot de passe</label>
-<input type="password" id="motdepasse-femme" required>
-      <label>Vos envies (plusieurs choix possibles)</label>
-<div class="choix-envies">
-  <label><input type="checkbox" name="envie" value="randonnee"> 🥾 Randonnée</label>
-  <label><input type="checkbox" name="envie" value="camping"> 🏕️ Camping</label>
-  <label><input type="checkbox" name="envie" value="escalade"> 🧗 Escalade</label>
-  <label><input type="checkbox" name="envie" value="kayak"> 🛶 Kayak / eau</label>
-  <label><input type="checkbox" name="envie" value="nuit-etoilee"> 🌌 Nuit à la belle étoile</label>
-  <label><input type="checkbox" name="envie" value="pique-nique"> 🧺 Pique-nique nature</label>
-  <label><input type="checkbox" name="envie" value="aventure-coquine"> 🔥 Aventure coquine en extérieur</label>
-</div>
-
-<label for="recherche-femme">Ce que vous recherchez</label>
-<select id="recherche-femme" name="recherche">
-  <option value="">-- Sélectionnez --</option>
-  <option value="partenaire-aventure">Un(e) partenaire d'aventure</option>
-  <option value="groupe-decouverte">Un groupe pour découvrir</option>
-  <option value="rencontre-serieuse">Une rencontre plus sérieuse</option>
-  <option value="plan-simple">Un plan simple, sans prise de tête</option>
-</select>
       Je confirme être majeur.
     </label>
 
@@ -582,29 +590,31 @@
       required
     ></textarea>
 
+    <label for="motdepasse-trans">Mot de passe</label>
+    <input type="password" id="motdepasse-trans" required>
+
+    <label>Vos envies (plusieurs choix possibles)</label>
+    <div class="choix-envies">
+      <label><input type="checkbox" name="envie" value="randonnee"> 🥾 Randonnée</label>
+      <label><input type="checkbox" name="envie" value="camping"> 🏕️ Camping</label>
+      <label><input type="checkbox" name="envie" value="escalade"> 🧗 Escalade</label>
+      <label><input type="checkbox" name="envie" value="kayak"> 🛶 Kayak / eau</label>
+      <label><input type="checkbox" name="envie" value="nuit-etoilee"> 🌌 Nuit à la belle étoile</label>
+      <label><input type="checkbox" name="envie" value="pique-nique"> 🧺 Pique-nique nature</label>
+      <label><input type="checkbox" name="envie" value="aventure-coquine"> 🔥 Aventure coquine en extérieur</label>
+    </div>
+
+    <label for="recherche-trans">Ce que vous recherchez</label>
+    <select id="recherche-trans" name="recherche">
+      <option value="">-- Sélectionnez --</option>
+      <option value="partenaire-aventure">Un(e) partenaire d'aventure</option>
+      <option value="groupe-decouverte">Un groupe pour découvrir</option>
+      <option value="rencontre-serieuse">Une rencontre plus sérieuse</option>
+      <option value="plan-simple">Un plan simple, sans prise de tête</option>
+    </select>
+
     <label>
       <input type="checkbox" required>
-      <label for="motdepasse-trans">Mot de passe</label>
-<input type="password" id="motdepasse-trans" required>
-      <label>Vos envies (plusieurs choix possibles)</label>
-<div class="choix-envies">
-  <label><input type="checkbox" name="envie" value="randonnee"> 🥾 Randonnée</label>
-  <label><input type="checkbox" name="envie" value="camping"> 🏕️ Camping</label>
-  <label><input type="checkbox" name="envie" value="escalade"> 🧗 Escalade</label>
-  <label><input type="checkbox" name="envie" value="kayak"> 🛶 Kayak / eau</label>
-  <label><input type="checkbox" name="envie" value="nuit-etoilee"> 🌌 Nuit à la belle étoile</label>
-  <label><input type="checkbox" name="envie" value="pique-nique"> 🧺 Pique-nique nature</label>
-  <label><input type="checkbox" name="envie" value="aventure-coquine"> 🔥 Aventure coquine en extérieur</label>
-</div>
-
-<label for="recherche-trans">Ce que vous recherchez</label>
-<select id="recherche-trans" name="recherche">
-  <option value="">-- Sélectionnez --</option>
-  <option value="partenaire-aventure">Un(e) partenaire d'aventure</option>
-  <option value="groupe-decouverte">Un groupe pour découvrir</option>
-  <option value="rencontre-serieuse">Une rencontre plus sérieuse</option>
-  <option value="plan-simple">Un plan simple, sans prise de tête</option>
-</select>
       Je confirme être majeur.
     </label>
 
@@ -703,6 +713,38 @@
   <a class="contour" href="#espace-membre">Retour à mon profil</a>
 </section>
 
+<section id="annuaire-membres" class="section">
+  <p class="sourcil">RENCONTRES</p>
+  <h2>Découvrir les membres</h2>
+
+  <label for="rayon-filtre">Rechercher autour de moi :</label>
+  <select id="rayon-filtre">
+    <option value="5">5 km</option>
+    <option value="20" selected>20 km</option>
+    <option value="50">50 km</option>
+    <option value="100">100 km</option>
+  </select>
+  <button type="button" class="primaire" onclick="appliquerFiltre()">Rechercher</button>
+
+  <div id="liste-profils"></div>
+
+  <a class="contour" href="#espace-membre">Retour à mon profil</a>
+</section>
+
+<div id="modale-chat" class="modale-overlay" style="display:none;">
+  <div class="modale-contenu">
+    <div class="modale-header">
+      <h3 id="chat-destinataire-nom">Conversation</h3>
+      <button type="button" onclick="fermerChat()">✕</button>
+    </div>
+    <div id="chat-messages" class="chat-messages"></div>
+    <div class="chat-input-zone">
+      <input type="text" id="chat-input" placeholder="Écris ton message...">
+      <button type="button" onclick="envoyerMessage()">Envoyer</button>
+    </div>
+  </div>
+</div>
+
 <section id="securite" class="section securite compacte">
   <p class="sourcil">SÉCURITÉ</p>
   <h2>La sécurité avant tout</h2>
@@ -746,37 +788,7 @@
     <button type="submit" class="primaire">Envoyer le rapport</button>
   </form>
 </section>
-  <section id="annuaire-membres" class="section">
-  <p class="sourcil">RENCONTRES</p>
-  <h2>Découvrir les membres</h2>
 
-  <label for="rayon-filtre">Rechercher autour de moi :</label>
-  <select id="rayon-filtre">
-    <option value="5">5 km</option>
-    <option value="20" selected>20 km</option>
-    <option value="50">50 km</option>
-    <option value="100">100 km</option>
-  </select>
-  <button type="button" class="primaire" onclick="appliquerFiltre()">Rechercher</button>
-
-  <div id="liste-profils"></div>
-
-  <a class="contour" href="#espace-membre">Retour à mon profil</a>
-</section>
-
-<div id="modale-chat" class="modale-overlay" style="display:none;">
-  <div class="modale-contenu">
-    <div class="modale-header">
-      <h3 id="chat-destinataire-nom">Conversation</h3>
-      <button type="button" onclick="fermerChat()">✕</button>
-    </div>
-    <div id="chat-messages" class="chat-messages"></div>
-    <div class="chat-input-zone">
-      <input type="text" id="chat-input" placeholder="Écris ton message...">
-      <button type="button" onclick="envoyerMessage()">Envoyer</button>
-    </div>
-  </div>
-</div>
 </main>
 <footer>
   <p>© 2026 En Plein Air</p>
@@ -784,12 +796,6 @@
   <p class="liens-footer">
     <a href="#securite">Sécurité</a> · <a href="#rapport">Signaler un problème</a>
   </p>
-  <a class="contour" href="#espace-membre">Retour à mon profil</a>
-</section>
-
-<!-- COLLE ICI le HTML de l'annuaire + modale -->
-
-</main>
 </footer>
 
 <script>
@@ -876,8 +882,9 @@ appliquerVuePleinEcran();
 function mettreAJourNavigation(connecte) {
   document.getElementById("nav-inscription").style.display = connecte ? "none" : "";
   document.getElementById("nav-connexion").style.display = connecte ? "none" : "";
-  document.getElementById("nav-profil").style.display = connecte ? "" : "none";<a class="contour" id="nav-annuaire" style="display:none;" href="#annuaire-membres">Découvrir les membres</a>
+  document.getElementById("nav-profil").style.display = connecte ? "" : "none";
   document.getElementById("nav-decouvrir").style.display = connecte ? "" : "none";
+  document.getElementById("nav-annuaire").style.display = connecte ? "" : "none";
   document.getElementById("nav-creer-aventure").style.display = connecte ? "" : "none";
   document.getElementById("nav-deconnexion").style.display = connecte ? "" : "none";
 
@@ -1032,8 +1039,6 @@ formulaires.forEach(function(config) {
   });
 });
 
-          
-      
 // Récupère le profil et l'affiche dans la page
 const NOM_BUCKET_MEDIAS = "medias-profil";
 let idUtilisateurCourant = null;
@@ -1067,6 +1072,8 @@ async function afficherProfil(accessToken, userEmail, userId) {
   document.getElementById("profil-type").textContent = profil.Profil || "";
   document.getElementById("profil-ville").textContent = profil.ville_departement || "";
   document.getElementById("profil-presentation").textContent = profil["Présentation"] || "";
+
+  window.monProfilCourant = profil;
 
   idUtilisateurCourant = userId;
   await chargerPhotoProfil();
@@ -1817,7 +1824,6 @@ document.getElementById("bouton-prevenir-createur").addEventListener("click", as
 
       const profils = await profilResponse.json();
       const pseudo = profils.length > 0 ? profils[0].Pseudonyme : user.email;
-      window.monProfilCourant = profil;
 
       const response = await fetch(
         SUPABASE_URL + "/rest/v1/Notifications",
@@ -1904,6 +1910,9 @@ window.addEventListener("hashchange", function() {
   if (window.location.hash === "#mes-notifications") {
     chargerNotifications();
   }
+  if (window.location.hash === "#annuaire-membres") {
+    appliquerFiltre();
+  }
 });
 
 async function deconnexion() {
@@ -1935,6 +1944,157 @@ async function deconnexion() {
   mettreAJourNavigation(false);
   window.location.hash = "connexion";
   alert("Vous êtes déconnecté.");
+}
+
+// Géocodage d'une ville en coordonnées GPS (Nominatim)
+async function geocoderVille(ville) {
+  try {
+    const url = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodeURIComponent(ville);
+    const res = await fetch(url, { headers: { "Accept": "application/json" } });
+    const data = await res.json();
+    if (data.length === 0) return null;
+    return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) };
+  } catch (error) {
+    console.error("Erreur géocodage :", error);
+    return null;
+  }
+}
+
+function distanceKm(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat/2) ** 2 +
+            Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) *
+            Math.sin(dLon/2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+// Filtre les membres par rayon autour de la ville du membre connecté
+async function appliquerFiltre() {
+  const token = localStorage.getItem("outdoor_access_token");
+  const rayon = parseInt(document.getElementById("rayon-filtre").value);
+
+  if (!window.monProfilCourant || !window.monProfilCourant.latitude) {
+    alert("Votre ville n'a pas pu être localisée. Modifiez votre profil.");
+    return;
+  }
+
+  const mesCoords = { lat: window.monProfilCourant.latitude, lon: window.monProfilCourant.longitude };
+
+  const response = await fetch(
+    SUPABASE_URL + "/rest/v1/Inscription?latitude=not.is.null&user_id=neq." + idUtilisateurCourant,
+    { headers: { "apikey": SUPABASE_KEY, "Authorization": "Bearer " + token } }
+  );
+
+  const profils = await response.json();
+
+  const resultats = profils.filter(function(p) {
+    return distanceKm(mesCoords.lat, mesCoords.lon, p.latitude, p.longitude) <= rayon;
+  });
+
+  afficherResultatsAnnuaire(resultats);
+}
+
+function afficherResultatsAnnuaire(profils) {
+  const container = document.getElementById("liste-profils");
+  container.innerHTML = "";
+
+  if (profils.length === 0) {
+    container.innerHTML = "<p>Aucun profil trouvé dans ce rayon.</p>";
+    return;
+  }
+
+  profils.forEach(function(p) {
+    const carte = document.createElement("article");
+    carte.className = "carte";
+    carte.innerHTML =
+      "<h3>" + p.Pseudonyme + "</h3>" +
+      "<p>" + (p["Présentation"] || "") + "</p>" +
+      "<p><strong>Recherche :</strong> " + (p.recherche || "Non précisé") + "</p>" +
+      "<p><strong>Envies :</strong> " + ((p.envies || []).join(", ")) + "</p>" +
+      "<p>" + (p.ville_departement || "") + "</p>" +
+      '<button type="button" class="primaire">Contacter</button>';
+
+    carte.querySelector("button").addEventListener("click", function() {
+      ouvrirChat(p.user_id, p.Pseudonyme);
+    });
+
+    container.appendChild(carte);
+  });
+}
+
+// Messagerie en modale
+let destinataireActuelId = null;
+
+function ouvrirChat(destinataireId, destinatairePseudo) {
+  destinataireActuelId = destinataireId;
+  document.getElementById("chat-destinataire-nom").textContent = destinatairePseudo || "Conversation";
+  document.getElementById("modale-chat").style.display = "flex";
+  chargerMessages();
+}
+
+function fermerChat() {
+  document.getElementById("modale-chat").style.display = "none";
+  destinataireActuelId = null;
+}
+
+async function chargerMessages() {
+  const token = localStorage.getItem("outdoor_access_token");
+  if (!token || !destinataireActuelId) return;
+
+  const filtre = "or=(and(sender_id.eq." + idUtilisateurCourant + ",receiver_id.eq." + destinataireActuelId + "),and(sender_id.eq." + destinataireActuelId + ",receiver_id.eq." + idUtilisateurCourant + "))";
+
+  const response = await fetch(
+    SUPABASE_URL + "/rest/v1/messages?" + filtre + "&order=created_at.asc",
+    { headers: { "apikey": SUPABASE_KEY, "Authorization": "Bearer " + token } }
+  );
+
+  const messages = await response.json();
+  const container = document.getElementById("chat-messages");
+  container.innerHTML = "";
+
+  messages.forEach(function(m) {
+    const bulle = document.createElement("div");
+    bulle.className = "msg-bulle " + (m.sender_id === idUtilisateurCourant ? "msg-envoye" : "msg-recu");
+    bulle.textContent = m.content;
+    container.appendChild(bulle);
+  });
+
+  container.scrollTop = container.scrollHeight;
+}
+
+async function envoyerMessage() {
+  const token = localStorage.getItem("outdoor_access_token");
+  const input = document.getElementById("chat-input");
+  const contenu = input.value.trim();
+  if (!contenu || !destinataireActuelId || !token) return;
+
+  const response = await fetch(
+    SUPABASE_URL + "/rest/v1/messages",
+    {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + token,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify({
+        sender_id: idUtilisateurCourant,
+        receiver_id: destinataireActuelId,
+        content: contenu
+      })
+    }
+  );
+
+  if (!response.ok) {
+    console.error(await response.text());
+    return;
+  }
+
+  input.value = "";
+  await chargerMessages();
 }
 
 // Retour depuis Stripe après le paiement d'un joker : on recharge
@@ -2022,158 +2182,8 @@ async function gererRetourJoker() {
     console.error("[joker] erreur:", error);
   }
 }
-let destinataireActuelId = null;
 
-function ouvrirChat(destinataireId, destinatairePseudo) {
-  destinataireActuelId = destinataireId;
-  document.getElementById("chat-destinataire-nom").textContent = destinatairePseudo || "Conversation";
-  document.getElementById("modale-chat").style.display = "flex";
-  chargerMessages();
-}
 
-function fermerChat() {
-  document.getElementById("modale-chat").style.display = "none";
-  destinataireActuelId = null;
-}
-
-async function chargerMessages() {
-  const token = localStorage.getItem("outdoor_access_token");
-  if (!token || !destinataireActuelId) return;
-
-  const filtre = "or=(and(sender_id.eq." + idUtilisateurCourant + ",receiver_id.eq." + destinataireActuelId + "),and(sender_id.eq." + destinataireActuelId + ",receiver_id.eq." + idUtilisateurCourant + "))";
-
-  const response = await fetch(
-    SUPABASE_URL + "/rest/v1/messages?" + filtre + "&order=created_at.asc",
-    { headers: { "apikey": SUPABASE_KEY, "Authorization": "Bearer " + token } }
-  );
-
-  const messages = await response.json();
-  const container = document.getElementById("chat-messages");
-  container.innerHTML = "";
-
-  messages.forEach(function(m) {
-    const bulle = document.createElement("div");
-    bulle.className = "msg-bulle " + (m.sender_id === idUtilisateurCourant ? "msg-envoye" : "msg-recu");
-    bulle.textContent = m.content;
-    container.appendChild(bulle);
-  });
-
-  container.scrollTop = container.scrollHeight;
-}
-
-async function envoyerMessage() {
-  const token = localStorage.getItem("outdoor_access_token");
-  const input = document.getElementById("chat-input");
-  const contenu = input.value.trim();
-  if (!contenu || !destinataireActuelId || !token) return;
-
-  const response = await fetch(
-    SUPABASE_URL + "/rest/v1/messages",
-    {
-      method: "POST",
-      headers: {
-        "apikey": SUPABASE_KEY,
-        "Authorization": "Bearer " + token,
-        "Content-Type": "application/json",
-        "Prefer": "return=minimal"
-      },
-      body: JSON.stringify({
-        sender_id: idUtilisateurCourant,
-        receiver_id: destinataireActuelId,
-        content: contenu
-      })
-    }
-  );
-
-  if (!response.ok) {
-    console.error(await response.text());
-    return;
-  }
-
-  input.value = "";
-  await chargerMessages();
-}
-async function geocoderVille(ville) {
-  try {
-    const url = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodeURIComponent(ville);
-    const res = await fetch(url, { headers: { "Accept": "application/json" } });
-    const data = await res.json();
-    if (data.length === 0) return null;
-    return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) };
-  } catch (error) {
-    console.error("Erreur géocodage :", error);
-    return null;
-  }
-}
-
-function distanceKm(lat1, lon1, lat2, lon2) {
-  const R = 6371;
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a = Math.sin(dLat/2) ** 2 +
-            Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) *
-            Math.sin(dLon/2) ** 2;
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-}
-  async function appliquerFiltre() {
-  const token = localStorage.getItem("outdoor_access_token");
-  const rayon = parseInt(document.getElementById("rayon-filtre").value);
-
-  if (!window.monProfilCourant || !window.monProfilCourant.latitude) {
-    alert("Votre ville n'a pas pu être localisée. Modifiez votre profil.");
-    return;
-  }
-
-  const mesCoords = { lat: window.monProfilCourant.latitude, lon: window.monProfilCourant.longitude };
-
-  const response = await fetch(
-    SUPABASE_URL + "/rest/v1/Inscription?latitude=not.is.null&user_id=neq." + idUtilisateurCourant,
-    { headers: { "apikey": SUPABASE_KEY, "Authorization": "Bearer " + token } }
-  );
-
-  const profils = await response.json();
-
-  const resultats = profils.filter(function(p) {
-    return distanceKm(mesCoords.lat, mesCoords.lon, p.latitude, p.longitude) <= rayon;
-  });
-
-  afficherResultatsAnnuaire(resultats);
-}
-
-function afficherResultatsAnnuaire(profils) {
-  const container = document.getElementById("liste-profils");
-  container.innerHTML = "";
-
-  if (profils.length === 0) {
-    container.innerHTML = "<p>Aucun profil trouvé dans ce rayon.</p>";
-    return;
-  }
-
-  profils.forEach(function(p) {
-    const carte = document.createElement("article");
-    carte.className = "carte";
-    carte.innerHTML =
-      "<h3>" + p.Pseudonyme + "</h3>" +
-      "<p>" + (p["Présentation"] || "") + "</p>" +
-      "<p><strong>Recherche :</strong> " + (p.recherche || "Non précisé") + "</p>" +
-      "<p><strong>Envies :</strong> " + ((p.envies || []).join(", ")) + "</p>" +
-      "<p>" + (p.ville_departement || "") + "</p>" +
-      '<button type="button" class="primaire">Contacter</button>';
-
-    carte.querySelector("button").addEventListener("click", function() {
-      ouvrirChat(p.user_id, p.Pseudonyme);
-    });
-
-    container.appendChild(carte);
-  });
-}
-
-window.addEventListener("hashchange", function() {
-  if (window.location.hash === "#annuaire-membres") {
-    appliquerFiltre();
-  }
-});
-  
 gererRetourJoker();
 </script>
 </body>
