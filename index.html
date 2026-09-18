@@ -1900,7 +1900,77 @@ async function gererRetourJoker() {
     console.error("[joker] erreur:", error);
   }
 }
+let destinataireActuelId = null;
 
+function ouvrirChat(destinataireId, destinatairePseudo) {
+  destinataireActuelId = destinataireId;
+  document.getElementById("chat-destinataire-nom").textContent = destinatairePseudo || "Conversation";
+  document.getElementById("modale-chat").style.display = "flex";
+  chargerMessages();
+}
+
+function fermerChat() {
+  document.getElementById("modale-chat").style.display = "none";
+  destinataireActuelId = null;
+}
+
+async function chargerMessages() {
+  const token = localStorage.getItem("outdoor_access_token");
+  if (!token || !destinataireActuelId) return;
+
+  const filtre = "or=(and(sender_id.eq." + idUtilisateurCourant + ",receiver_id.eq." + destinataireActuelId + "),and(sender_id.eq." + destinataireActuelId + ",receiver_id.eq." + idUtilisateurCourant + "))";
+
+  const response = await fetch(
+    SUPABASE_URL + "/rest/v1/messages?" + filtre + "&order=created_at.asc",
+    { headers: { "apikey": SUPABASE_KEY, "Authorization": "Bearer " + token } }
+  );
+
+  const messages = await response.json();
+  const container = document.getElementById("chat-messages");
+  container.innerHTML = "";
+
+  messages.forEach(function(m) {
+    const bulle = document.createElement("div");
+    bulle.className = "msg-bulle " + (m.sender_id === idUtilisateurCourant ? "msg-envoye" : "msg-recu");
+    bulle.textContent = m.content;
+    container.appendChild(bulle);
+  });
+
+  container.scrollTop = container.scrollHeight;
+}
+
+async function envoyerMessage() {
+  const token = localStorage.getItem("outdoor_access_token");
+  const input = document.getElementById("chat-input");
+  const contenu = input.value.trim();
+  if (!contenu || !destinataireActuelId || !token) return;
+
+  const response = await fetch(
+    SUPABASE_URL + "/rest/v1/messages",
+    {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + token,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify({
+        sender_id: idUtilisateurCourant,
+        receiver_id: destinataireActuelId,
+        content: contenu
+      })
+    }
+  );
+
+  if (!response.ok) {
+    console.error(await response.text());
+    return;
+  }
+
+  input.value = "";
+  await chargerMessages();
+}
 
 gererRetourJoker();
 </script>
