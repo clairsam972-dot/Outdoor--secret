@@ -850,6 +850,12 @@ formulaires.forEach(function(config) {
     const motdepasse = document.getElementById(config.motdepasse).value;
     const bouton = formulaire.querySelector('button[type="submit"]');
 
+    const envies = Array.from(bloc.querySelectorAll('input[name="envie"]:checked')).map(function(cb) {
+      return cb.value;
+    });
+    const champRecherche = bloc.querySelector('select[name="recherche"]');
+    const recherche = champRecherche ? champRecherche.value : "";
+
     await avecChargement(bouton, "Création en cours...", async function() {
       try {
 
@@ -876,6 +882,8 @@ formulaires.forEach(function(config) {
 
         const userId = authData.user ? authData.user.id : authData.id;
 
+        const coords = await geocoderVille(ville);
+
         const response = await fetch(
           SUPABASE_URL + "/rest/v1/Inscription",
           {
@@ -892,7 +900,11 @@ formulaires.forEach(function(config) {
               "ville_departement": ville,
               "Présentation": presentation,
               "Profil": config.profil,
-              "user_id": userId
+              "user_id": userId,
+              "envies": envies,
+              "recherche": recherche,
+              "latitude": coords ? coords.lat : null,
+              "longitude": coords ? coords.lon : null
             })
           }
         );
@@ -913,6 +925,8 @@ formulaires.forEach(function(config) {
   });
 });
 
+          
+      
 // Récupère le profil et l'affiche dans la page
 const NOM_BUCKET_MEDIAS = "medias-profil";
 let idUtilisateurCourant = null;
