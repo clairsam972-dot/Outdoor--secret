@@ -677,6 +677,12 @@
   <p class="liens-footer">
     <a href="#securite">Sécurité</a> · <a href="#rapport">Signaler un problème</a>
   </p>
+  <a class="contour" href="#espace-membre">Retour à mon profil</a>
+</section>
+
+<!-- COLLE ICI le HTML de l'annuaire + modale -->
+
+</main>
 </footer>
 
 <script>
@@ -763,7 +769,7 @@ appliquerVuePleinEcran();
 function mettreAJourNavigation(connecte) {
   document.getElementById("nav-inscription").style.display = connecte ? "none" : "";
   document.getElementById("nav-connexion").style.display = connecte ? "none" : "";
-  document.getElementById("nav-profil").style.display = connecte ? "" : "none";
+  document.getElementById("nav-profil").style.display = connecte ? "" : "none";<a class="contour" id="nav-annuaire" style="display:none;" href="#annuaire-membres">Découvrir les membres</a>
   document.getElementById("nav-decouvrir").style.display = connecte ? "" : "none";
   document.getElementById("nav-creer-aventure").style.display = connecte ? "" : "none";
   document.getElementById("nav-deconnexion").style.display = connecte ? "" : "none";
