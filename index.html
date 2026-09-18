@@ -1696,6 +1696,7 @@ document.getElementById("bouton-prevenir-createur").addEventListener("click", as
 
       const profils = await profilResponse.json();
       const pseudo = profils.length > 0 ? profils[0].Pseudonyme : user.email;
+      window.monProfilCourant = profil;
 
       const response = await fetch(
         SUPABASE_URL + "/rest/v1/Notifications",
@@ -1971,7 +1972,87 @@ async function envoyerMessage() {
   input.value = "";
   await chargerMessages();
 }
+async function geocoderVille(ville) {
+  try {
+    const url = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodeURIComponent(ville);
+    const res = await fetch(url, { headers: { "Accept": "application/json" } });
+    const data = await res.json();
+    if (data.length === 0) return null;
+    return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) };
+  } catch (error) {
+    console.error("Erreur géocodage :", error);
+    return null;
+  }
+}
 
+function distanceKm(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat/2) ** 2 +
+            Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) *
+            Math.sin(dLon/2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+  async function appliquerFiltre() {
+  const token = localStorage.getItem("outdoor_access_token");
+  const rayon = parseInt(document.getElementById("rayon-filtre").value);
+
+  if (!window.monProfilCourant || !window.monProfilCourant.latitude) {
+    alert("Votre ville n'a pas pu être localisée. Modifiez votre profil.");
+    return;
+  }
+
+  const mesCoords = { lat: window.monProfilCourant.latitude, lon: window.monProfilCourant.longitude };
+
+  const response = await fetch(
+    SUPABASE_URL + "/rest/v1/Inscription?latitude=not.is.null&user_id=neq." + idUtilisateurCourant,
+    { headers: { "apikey": SUPABASE_KEY, "Authorization": "Bearer " + token } }
+  );
+
+  const profils = await response.json();
+
+  const resultats = profils.filter(function(p) {
+    return distanceKm(mesCoords.lat, mesCoords.lon, p.latitude, p.longitude) <= rayon;
+  });
+
+  afficherResultatsAnnuaire(resultats);
+}
+
+function afficherResultatsAnnuaire(profils) {
+  const container = document.getElementById("liste-profils");
+  container.innerHTML = "";
+
+  if (profils.length === 0) {
+    container.innerHTML = "<p>Aucun profil trouvé dans ce rayon.</p>";
+    return;
+  }
+
+  profils.forEach(function(p) {
+    const carte = document.createElement("article");
+    carte.className = "carte";
+    carte.innerHTML =
+      "<h3>" + p.Pseudonyme + "</h3>" +
+      "<p>" + (p["Présentation"] || "") + "</p>" +
+      "<p><strong>Recherche :</strong> " + (p.recherche || "Non précisé") + "</p>" +
+      "<p><strong>Envies :</strong> " + ((p.envies || []).join(", ")) + "</p>" +
+      "<p>" + (p.ville_departement || "") + "</p>" +
+      '<button type="button" class="primaire">Contacter</button>';
+
+    carte.querySelector("button").addEventListener("click", function() {
+      ouvrirChat(p.user_id, p.Pseudonyme);
+    });
+
+    container.appendChild(carte);
+  });
+}
+
+window.addEventListener("hashchange", function() {
+  if (window.location.hash === "#annuaire-membres") {
+    appliquerFiltre();
+  }
+});
+  
 gererRetourJoker();
 </script>
 </body>
